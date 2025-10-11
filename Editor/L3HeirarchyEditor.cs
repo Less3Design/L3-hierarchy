@@ -5,10 +5,11 @@ using Less3.Heirachy;
 using System.Collections.Generic;
 using UnityEditor.Callbacks;
 using UnityEditor.UIElements;
+using Less3.TypeTree.Editor;
 
 namespace Less3.Heirarchy.Editor
 {
-    public class L3HeirarchyInspector : UnityEditor.EditorWindow
+    public class L3HeirarchyEditor : UnityEditor.EditorWindow
     {
         [SerializeField] private VisualTreeAsset m_VisualTreeAsset;// Assigned manually in script inspector.
         [SerializeField] private VisualTreeAsset m_element_VisualTreeAsset;// Assigned manually in script inspector.
@@ -54,7 +55,7 @@ namespace Less3.Heirarchy.Editor
 
         public static void OpenForAsset(L3Heirarchy asset)
         {
-            var window = GetWindow<L3HeirarchyInspector>();
+            var window = GetWindow<L3HeirarchyEditor>();
             window.InitGUI(asset);
         }
 
@@ -81,10 +82,13 @@ namespace Less3.Heirarchy.Editor
                 // add a right click context menu to the element
                 element.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
                 {
-                    evt.menu.AppendAction("Create Child Node", (a) =>
+                    evt.menu.AppendAction("Add node as Child", (a) =>
                     {
-                        item.heirarchy.CreateNode<ExNode>(item);
-                        RefreshTreeView();
+                        L3TypeTreeWindow.OpenForType(item.GetType(), (type) =>
+                        {
+                            var newNode = item.heirarchy.CreateNode(type, item);
+                            RefreshTreeView();
+                        });
                     });
                     evt.menu.AppendAction("Delete Node", (a) =>
                     {

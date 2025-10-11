@@ -1,7 +1,9 @@
 {
     "name": "Less3.Heirarchy",
     "rootNamespace": "Less3.Heirarchy",
-    "references": [],
+    "references": [
+        "Less3.TypeTree"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

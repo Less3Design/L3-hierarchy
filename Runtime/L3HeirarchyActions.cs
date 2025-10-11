@@ -94,6 +94,40 @@ namespace Less3.Heirarchy
             return newNode;
         }
 
+        public static L3HeirarchyNode CreateNode(this L3Heirarchy heirarchy, System.Type nodeType, L3HeirarchyNode parent = null)
+        {
+            if (heirarchy == null || nodeType == null)
+                return null;
+
+            if (!typeof(L3HeirarchyNode).IsAssignableFrom(nodeType))
+            {
+                Debug.LogError("Type " + nodeType.Name + " is not a L3HeirarchyNode.");
+                return null;
+            }
+
+            var newNode = ScriptableObject.CreateInstance(nodeType) as L3HeirarchyNode;
+            if (newNode == null)
+            {
+                Debug.LogError("Failed to create instance of type " + nodeType.Name);
+                return null;
+            }
+
+            newNode.InitNode(heirarchy);
+            newNode.name = System.Guid.NewGuid().ToString();// !
+
+            RecordUndoIfAsset(heirarchy, "Create Node");
+            heirarchy.nodes.Add(newNode);
+            AddAsSubObjectIfAsset(newNode, heirarchy);
+
+            if (parent != null)
+            {
+                RecordUndoIfAsset(parent, "Create Node");
+                newNode.SetParent(parent);
+            }
+
+            return newNode;
+        }
+
 
         /// <summary>
         /// Delete the node, and all its children. Very destructive! Make sure to warn the user before calling this.

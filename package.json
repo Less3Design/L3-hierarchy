@@ -8,5 +8,8 @@
   "keywords": [
     "Heirarchy"
   ],
-  "category": "Unity"
+  "category": "Unity",
+  "dependencies": {
+    "less3.typetree": "0.1.0"
+  }
 }

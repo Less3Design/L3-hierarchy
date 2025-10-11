@@ -2,9 +2,12 @@
     "name": "Less3.Heirarchy.Editor",
     "rootNamespace": "Less3.Heirarchy.Editor",
     "references": [
-        "GUID:ecfd646a43e3c7442b9669bb60dcf9ae"
+        "Less3.Heirarchy",
+        "Less3.TypeTree.Editor"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
