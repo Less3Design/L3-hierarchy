@@ -1,0 +1,14 @@
+{
+    "name": "Less3.Heirarchy",
+    "rootNamespace": "Less3.Heirarchy",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

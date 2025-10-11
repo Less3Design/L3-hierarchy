@@ -1,0 +1,13 @@
+.Separator {
+    height: 4px;
+    flex-shrink: 0;
+}
+
+:root {
+    background-color: var(--unity-colors-default-background);
+    flex-grow: 1;
+}
+
+.ContentBackground {
+    background-color: var(--unity-colors-window-background);
+}

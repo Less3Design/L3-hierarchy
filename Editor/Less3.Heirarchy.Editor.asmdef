@@ -1,0 +1,16 @@
+{
+    "name": "Less3.Heirarchy.Editor",
+    "rootNamespace": "Less3.Heirarchy.Editor",
+    "references": [
+        "GUID:ecfd646a43e3c7442b9669bb60dcf9ae"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
