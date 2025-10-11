@@ -5,13 +5,18 @@ namespace Less3.Heirachy
 {
     public abstract class L3HeirarchyNode : ScriptableObject
     {
+        [SerializeField, HideInInspector]
+        private int serializedVersion = 1;// For future use (maybe)
+
         // Nodes are arranged based on each nodes internal parent / child references.
         // Modeled after GameObject transforms.
+        [SerializeField, HideInInspector]
         public L3HeirarchyNode parent;
         // Order of this list is the order of the children, top / first is index 0
+        [SerializeField, HideInInspector]
         public List<L3HeirarchyNode> children = new List<L3HeirarchyNode>();
 
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private L3Heirarchy _heirarchy;
         public L3Heirarchy heirarchy => _heirarchy;
 

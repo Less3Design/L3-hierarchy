@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
   m_Name: ExNode
   m_EditorClassIdentifier: 
-  parent: {fileID: -2415002744956369170}
+  serializedVersion: 1
+  parent: {fileID: 3028106128299646003}
   children: []
   _heirarchy: {fileID: 11400000}
   nodeData: 
@@ -28,8 +29,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
   m_Name: ExNode
   m_EditorClassIdentifier: 
+  serializedVersion: 1
   parent: {fileID: 0}
-  children: []
+  children:
+  - {fileID: -2415002744956369170}
+  - {fileID: 3028106128299646003}
   _heirarchy: {fileID: 11400000}
   nodeData: 
 --- !u!114 &-2445608429999651791
@@ -44,7 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
+  serializedVersion: 1
+  parent: {fileID: 3028106128299646003}
   children: []
   _heirarchy: {fileID: 11400000}
   nodeData: 
@@ -60,9 +65,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
   m_Name: ExNode
   m_EditorClassIdentifier: 
-  parent: {fileID: 3028106128299646003}
-  children:
-  - {fileID: -8876539295580403858}
+  serializedVersion: 1
+  parent: {fileID: -3674565261277920359}
+  children: []
   _heirarchy: {fileID: 11400000}
   nodeData: 
 --- !u!114 &11400000
@@ -77,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7cf7f2b1b3cfa42b6206eabd542596, type: 3}
   m_Name: ExNode
   m_EditorClassIdentifier: 
+  serializedVersion: 1
   nodes:
   - {fileID: -2445608429999651791}
   - {fileID: -3674565261277920359}
@@ -96,8 +102,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
   m_Name: ExNode
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
+  serializedVersion: 1
+  parent: {fileID: -3674565261277920359}
   children:
-  - {fileID: -2415002744956369170}
+  - {fileID: -2445608429999651791}
+  - {fileID: -8876539295580403858}
   _heirarchy: {fileID: 11400000}
   nodeData: 

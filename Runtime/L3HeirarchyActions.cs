@@ -60,7 +60,7 @@ namespace Less3.Heirarchy
             node.SetIndex(newIndex);
         }
 
-        public static bool ReleaseParentAction(this L3HeirarchyNode node)
+        public static bool ReleaseParentAction(this L3HeirarchyNode node, int siblingIndex)
         {
             if (node.parent != null)
             {
