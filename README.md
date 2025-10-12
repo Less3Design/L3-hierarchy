@@ -20,7 +20,7 @@ The `L3Hierarchy` object is what holds all of our nodes. It does not maintain an
 ```c#
 using Less3.Hierarchy;
 
-[CreateAssetMenu(menuName = "Less3/Examples/Hierarchy", fileName = "NewExampleHierarchy", order = 1)]
+[CreateAssetMenu(menuName = "Less3/Examples/Hierarchy", fileName = "NewExampleHierarchy")]
 public class ExampleHierarchy : L3Hierarchy
 {
     // settings that affect the entire heirarchy can go here
