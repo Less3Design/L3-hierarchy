@@ -1,11 +1,11 @@
-using Less3.Heirarchy;
+using Less3.Hierarchy;
 using Less3.TypeTree;
 using UnityEngine;
 
-namespace Less3.Heirachy
+namespace Less3.Hierarchy
 {
-    [TypeTreeMenu(typeof(ExHeiarchy), "Example/Other")]
-    public class ExNodeOther : L3HeirarchyNode
+    [TypeTreeMenu(typeof(ExHierarchy), "Example/Other")]
+    public class ExNodeOther : L3HierarchyNode
     {
     }
 }

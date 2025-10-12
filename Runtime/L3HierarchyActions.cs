@@ -1,25 +1,25 @@
-using Less3.Heirachy;
+using Less3.Hierarchy;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Less3.Heirarchy
+namespace Less3.Hierarchy
 {
     /// <summary>
     /// Holds all the methods like "add node" and "set parent" for manipulating heirarchies and nodes.
     /// Methods are valid to be used in editor and runtime.
     /// </summary>
-    public static class L3HeirarchyActions
+    public static class L3HierarchyActions
     {
         // Actions are undo-able operations if its editor
-        public static bool SetParentAction(this L3HeirarchyNode node, L3HeirarchyNode newParent)
+        public static bool SetParentAction(this L3HierarchyNode node, L3HierarchyNode newParent)
         {
-            if (node == null || newParent == null || node.heirarchy == null)
+            if (node == null || newParent == null || node.Hierarchy == null)
                 return false;
 
             // Validate the action
-            if (node.heirarchy.ValidateParentAction(node, newParent) == false)
+            if (node.Hierarchy.ValidateParentAction(node, newParent) == false)
                 return false;
 
             RecordUndoIfAsset(node, "Set Parent");
@@ -30,13 +30,13 @@ namespace Less3.Heirarchy
             return node.SetParent(newParent);
         }
 
-        public static bool SetParentAction(this L3HeirarchyNode node, L3HeirarchyNode newParent, int index)
+        public static bool SetParentAction(this L3HierarchyNode node, L3HierarchyNode newParent, int index)
         {
-            if (node == null || newParent == null || node.heirarchy == null)
+            if (node == null || newParent == null || node.Hierarchy == null)
                 return false;
 
             // Validate the action
-            if (node.heirarchy.ValidateParentAction(node, newParent) == false)
+            if (node.Hierarchy.ValidateParentAction(node, newParent) == false)
                 return false;
 
             RecordUndoIfAsset(node, "Set Parent");
@@ -50,7 +50,7 @@ namespace Less3.Heirarchy
             return true;//uhh..
         }
 
-        public static void SetIndexAction(this L3HeirarchyNode node, int newIndex)
+        public static void SetIndexAction(this L3HierarchyNode node, int newIndex)
         {
             if (node.parent != null)
             {
@@ -60,7 +60,7 @@ namespace Less3.Heirarchy
             node.SetIndex(newIndex);
         }
 
-        public static bool ReleaseParentAction(this L3HeirarchyNode node, int siblingIndex)
+        public static bool ReleaseParentAction(this L3HierarchyNode node, int siblingIndex)
         {
             if (node.parent != null)
             {
@@ -72,18 +72,18 @@ namespace Less3.Heirarchy
             return true;
         }
 
-        public static T CreateNode<T>(this L3Heirarchy heirarchy, L3HeirarchyNode parent = null) where T : L3HeirarchyNode
+        public static T CreateNode<T>(this L3Hierarchy Hierarchy, L3HierarchyNode parent = null) where T : L3HierarchyNode
         {
-            if (heirarchy == null)
+            if (Hierarchy == null)
                 return null;
 
             var newNode = ScriptableObject.CreateInstance<T>();
-            newNode.InitNode(heirarchy);
+            newNode.InitNode(Hierarchy);
             newNode.name = System.Guid.NewGuid().ToString();
 
-            RecordUndoIfAsset(heirarchy, "Create Node");
-            heirarchy.nodes.Add(newNode);
-            AddAsSubObjectIfAsset(newNode, heirarchy);
+            RecordUndoIfAsset(Hierarchy, "Create Node");
+            Hierarchy.nodes.Add(newNode);
+            AddAsSubObjectIfAsset(newNode, Hierarchy);
 
             if (parent != null)
             {
@@ -94,30 +94,30 @@ namespace Less3.Heirarchy
             return newNode;
         }
 
-        public static L3HeirarchyNode CreateNode(this L3Heirarchy heirarchy, System.Type nodeType, L3HeirarchyNode parent = null)
+        public static L3HierarchyNode CreateNode(this L3Hierarchy Hierarchy, System.Type nodeType, L3HierarchyNode parent = null)
         {
-            if (heirarchy == null || nodeType == null)
+            if (Hierarchy == null || nodeType == null)
                 return null;
 
-            if (!typeof(L3HeirarchyNode).IsAssignableFrom(nodeType))
+            if (!typeof(L3HierarchyNode).IsAssignableFrom(nodeType))
             {
-                Debug.LogError("Type " + nodeType.Name + " is not a L3HeirarchyNode.");
+                Debug.LogError("Type " + nodeType.Name + " is not a L3HierarchyNode.");
                 return null;
             }
 
-            var newNode = ScriptableObject.CreateInstance(nodeType) as L3HeirarchyNode;
+            var newNode = ScriptableObject.CreateInstance(nodeType) as L3HierarchyNode;
             if (newNode == null)
             {
                 Debug.LogError("Failed to create instance of type " + nodeType.Name);
                 return null;
             }
 
-            newNode.InitNode(heirarchy);
+            newNode.InitNode(Hierarchy);
             newNode.name = System.Guid.NewGuid().ToString();// !
 
-            RecordUndoIfAsset(heirarchy, "Create Node");
-            heirarchy.nodes.Add(newNode);
-            AddAsSubObjectIfAsset(newNode, heirarchy);
+            RecordUndoIfAsset(Hierarchy, "Create Node");
+            Hierarchy.nodes.Add(newNode);
+            AddAsSubObjectIfAsset(newNode, Hierarchy);
 
             if (parent != null)
             {
@@ -132,19 +132,19 @@ namespace Less3.Heirarchy
         /// <summary>
         /// Delete the node, and all its children. Very destructive! Make sure to warn the user before calling this.
         /// </summary>
-        public static void DeleteNode(this L3Heirarchy heirarchy, L3HeirarchyNode node)
+        public static void DeleteNode(this L3Hierarchy Hierarchy, L3HierarchyNode node)
         {
-            RecordUndoIfAsset(heirarchy, "Delete Node");
-            DeleteNodeRecursive(heirarchy, node);
-            SaveObjectIfAsset(heirarchy);
+            RecordUndoIfAsset(Hierarchy, "Delete Node");
+            DeleteNodeRecursive(Hierarchy, node);
+            SaveObjectIfAsset(Hierarchy);
         }
 
-        private static void DeleteNodeRecursive(this L3Heirarchy heirarchy, L3HeirarchyNode node)
+        private static void DeleteNodeRecursive(this L3Hierarchy Hierarchy, L3HierarchyNode node)
         {
-            if (heirarchy == null || node == null)
+            if (Hierarchy == null || node == null)
                 return;
 
-            if (heirarchy.nodes.Contains(node) == false)
+            if (Hierarchy.nodes.Contains(node) == false)
             {
                 return;
             }
@@ -160,7 +160,7 @@ namespace Less3.Heirarchy
             // Remove all children
             foreach (var child in node.children.ToArray())
             {
-                heirarchy.DeleteNodeRecursive(child);
+                Hierarchy.DeleteNodeRecursive(child);
             }
 
 #if UNITY_EDITOR
@@ -177,15 +177,15 @@ namespace Less3.Heirarchy
             ScriptableObject.Destroy(node);
 #endif
 
-            heirarchy.nodes.Remove(node);
+            Hierarchy.nodes.Remove(node);
         }
 
         // * ----------------------------------------------------------------------------------------
 
         // Components are the bits that make up the actions
-        private static bool SetParent(this L3HeirarchyNode node, L3HeirarchyNode newParent)
+        private static bool SetParent(this L3HierarchyNode node, L3HierarchyNode newParent)
         {
-            if (!node.heirarchy.ValidateParentAction(node, newParent))
+            if (!node.Hierarchy.ValidateParentAction(node, newParent))
                 return false;
 
             // Remove from old parent
@@ -203,7 +203,7 @@ namespace Less3.Heirarchy
             return true;
         }
 
-        private static void RemoveParent(this L3HeirarchyNode node)
+        private static void RemoveParent(this L3HierarchyNode node)
         {
             if (node == null)
                 return;
@@ -218,7 +218,7 @@ namespace Less3.Heirarchy
             SetDirtyIfAsset(parent);
         }
 
-        private static void SetIndex(this L3HeirarchyNode node, int newIndex)
+        private static void SetIndex(this L3HierarchyNode node, int newIndex)
         {
             if (node.parent == null)
                 return;

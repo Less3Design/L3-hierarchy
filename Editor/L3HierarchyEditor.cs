@@ -1,31 +1,31 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
-using Less3.Heirachy;
+using Less3.Hierarchy;
 using System.Collections.Generic;
 using UnityEditor.Callbacks;
 using UnityEditor.UIElements;
 using Less3.TypeTree.Editor;
 
-namespace Less3.Heirarchy.Editor
+namespace Less3.Hierarchy.Editor
 {
-    public class L3HeirarchyEditor : UnityEditor.EditorWindow
+    public class L3HierarchyEditor : UnityEditor.EditorWindow
     {
         [SerializeField] private VisualTreeAsset m_VisualTreeAsset;// Assigned manually in script inspector.
         [SerializeField] private VisualTreeAsset m_element_VisualTreeAsset;// Assigned manually in script inspector.
-        [SerializeField, HideInInspector] private L3Heirarchy target;
+        [SerializeField, HideInInspector] private L3Hierarchy target;
         [SerializeField] private Texture2D windowIcon;
 
         private TreeView treeView;
         private VisualElement inspectorContainer;
 
-        private Dictionary<int, L3HeirarchyNodeElement> nodeElements = new Dictionary<int, L3HeirarchyNodeElement>();
+        private Dictionary<int, L3HierarchyNodeElement> nodeElements = new Dictionary<int, L3HierarchyNodeElement>();
 
         [OnOpenAsset(1)]
         public static bool DoubleClickAsset(int instanceID, int line)
         {
             Object obj = EditorUtility.InstanceIDToObject(instanceID);
-            if (obj is L3Heirarchy asset)
+            if (obj is L3Hierarchy asset)
             {
                 OpenForAsset(asset);
                 return true; // we handled the open
@@ -73,20 +73,20 @@ namespace Less3.Heirarchy.Editor
             }
         }
 
-        public static void OpenForAsset(L3Heirarchy asset)
+        public static void OpenForAsset(L3Hierarchy asset)
         {
-            var window = GetWindow<L3HeirarchyEditor>();
+            var window = GetWindow<L3HierarchyEditor>();
             window.InitGUI(asset);
         }
 
-        public void InitGUI(L3Heirarchy heirarchy)
+        public void InitGUI(L3Hierarchy Hierarchy)
         {
-            this.titleContent = new GUIContent(heirarchy.name, windowIcon);
-            target = heirarchy;
+            this.titleContent = new GUIContent(Hierarchy.name, windowIcon);
+            target = Hierarchy;
             var root = m_VisualTreeAsset.CloneTree();
             rootVisualElement.Clear();
             rootVisualElement.Add(root);
-            root.Q<Label>("TypeName").text = heirarchy.GetType().Name;
+            root.Q<Label>("TypeName").text = Hierarchy.GetType().Name;
 
             inspectorContainer = root.Q("InspectorContainer");
 
@@ -94,11 +94,11 @@ namespace Less3.Heirarchy.Editor
             treeView.makeItem = () => m_element_VisualTreeAsset.CloneTree();
             treeView.bindItem = (element, i) =>
             {
-                var item = treeView.GetItemDataForIndex<L3HeirarchyNode>(i);
+                var item = treeView.GetItemDataForIndex<L3HierarchyNode>(i);
 
                 if (!nodeElements.ContainsKey(item.GetInstanceID()))
                 {
-                    nodeElements[i] = new L3HeirarchyNodeElement(element, item);
+                    nodeElements[i] = new L3HierarchyNodeElement(element, item);
                 }
                 else
                 {
@@ -110,9 +110,9 @@ namespace Less3.Heirarchy.Editor
                 {
                     evt.menu.AppendAction("Add node as Child", (a) =>
                     {
-                        L3TypeTreeWindow.OpenForType(item.heirarchy.GetType(), (type) =>
+                        L3TypeTreeWindow.OpenForType(item.Hierarchy.GetType(), (type) =>
                         {
-                            var newNode = item.heirarchy.CreateNode(type, item);
+                            var newNode = item.Hierarchy.CreateNode(type, item);
                             RefreshTreeView();
                         });
                     });
@@ -121,7 +121,7 @@ namespace Less3.Heirarchy.Editor
                         // warning dialogue
                         if (EditorUtility.DisplayDialog("Delete Node?", "This will delete the node and all its children. Are you sure?", "Delete", "Cancel"))
                         {
-                            item.heirarchy.DeleteNode(item);
+                            item.Hierarchy.DeleteNode(item);
                             RefreshTreeView();
                         }
                     });
@@ -144,13 +144,13 @@ namespace Less3.Heirarchy.Editor
                 // index relative to new parent
                 int siblingIndex = destinationIndex - parentIndex - 1;
 
-                var nodeMoved = treeView.GetItemDataForId<L3HeirarchyNode>(idFrom);
-                var newParent = treeView.GetItemDataForId<L3HeirarchyNode>(idTo);
+                var nodeMoved = treeView.GetItemDataForId<L3HierarchyNode>(idFrom);
+                var newParent = treeView.GetItemDataForId<L3HierarchyNode>(idTo);
 
-                List<L3HeirarchyNode> nodesToMove = new List<L3HeirarchyNode>();
+                List<L3HierarchyNode> nodesToMove = new List<L3HierarchyNode>();
                 foreach (int index in treeView.selectedIndices)
                 {
-                    var child = treeView.GetItemDataForIndex<L3HeirarchyNode>(index);
+                    var child = treeView.GetItemDataForIndex<L3HierarchyNode>(index);
                     nodesToMove.Add(child);
                 }
 
@@ -159,7 +159,7 @@ namespace Less3.Heirarchy.Editor
                 {
                     foreach (var n in nodesToMove)
                     {
-                        if (n.heirarchy.ValidateParentAction(n, newParent))
+                        if (n.Hierarchy.ValidateParentAction(n, newParent))
                         {
                             n.ReleaseParentAction(siblingIndex + i);
                             i++;
@@ -170,23 +170,23 @@ namespace Less3.Heirarchy.Editor
                 {
                     foreach (var n in nodesToMove)
                     {
-                        if (n.heirarchy.ValidateParentAction(n, newParent))
+                        if (n.Hierarchy.ValidateParentAction(n, newParent))
                         {
                             n.SetParentAction(newParent, siblingIndex + i);
                             i++;
                         }
                     }
                 }
-                nodeMoved.heirarchy.UpdateTree_EDITOR();
+                nodeMoved.Hierarchy.UpdateTree_EDITOR();
                 RefreshTreeView();// todo remove.
             };
 
             treeView.selectionChanged += (items) =>
             {
-                List<L3HeirarchyNode> nodes = new List<L3HeirarchyNode>();
+                List<L3HierarchyNode> nodes = new List<L3HierarchyNode>();
                 foreach (var obj in items)
                 {
-                    if (obj is L3HeirarchyNode node)
+                    if (obj is L3HierarchyNode node)
                     {
                         nodes.Add(node);
                     }
@@ -232,7 +232,7 @@ namespace Less3.Heirarchy.Editor
             }
         }
 
-        private void UpdateSelction(List<L3HeirarchyNode> node)
+        private void UpdateSelction(List<L3HierarchyNode> node)
         {
             inspectorContainer.Clear();
 
@@ -252,11 +252,11 @@ namespace Less3.Heirarchy.Editor
             inspectorContainer.Add(new InspectorElement(serializedObject));
         }
 
-        private List<TreeViewItemData<L3HeirarchyNode>> BuildTreeView()
+        private List<TreeViewItemData<L3HierarchyNode>> BuildTreeView()
         {
-            List<TreeViewItemData<L3HeirarchyNode>> tree = new List<TreeViewItemData<L3HeirarchyNode>>();
+            List<TreeViewItemData<L3HierarchyNode>> tree = new List<TreeViewItemData<L3HierarchyNode>>();
 
-            foreach (var node in ((L3Heirarchy)target).nodes)
+            foreach (var node in ((L3Hierarchy)target).nodes)
             {
                 if (node.parent == null)
                 {
@@ -266,14 +266,14 @@ namespace Less3.Heirarchy.Editor
             return tree;
         }
 
-        private TreeViewItemData<L3HeirarchyNode> BuildTreeViewItem(L3HeirarchyNode node)
+        private TreeViewItemData<L3HierarchyNode> BuildTreeViewItem(L3HierarchyNode node)
         {
-            var children = new List<TreeViewItemData<L3HeirarchyNode>>();
+            var children = new List<TreeViewItemData<L3HierarchyNode>>();
             foreach (var child in node.children)
             {
                 children.Add(BuildTreeViewItem(child));
             }
-            return new TreeViewItemData<L3HeirarchyNode>(node.GetInstanceID(), node, children);
+            return new TreeViewItemData<L3HierarchyNode>(node.GetInstanceID(), node, children);
         }
     }
 }

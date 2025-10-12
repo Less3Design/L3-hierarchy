@@ -1,22 +1,22 @@
-using Less3.Heirachy;
+using Less3.Hierarchy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Less3.Heirarchy.Editor
+namespace Less3.Hierarchy.Editor
 {
     /// <summary>
     /// Node as it exists as a visual element
     /// </summary>
-    public class L3HeirarchyNodeElement
+    public class L3HierarchyNodeElement
     {
-        public L3HeirarchyNode node;
+        public L3HierarchyNode node;
 
         public VisualElement root;
         public VisualElement icon;
         public Label title;
         public Label subTitle;
 
-        public L3HeirarchyNodeElement(VisualElement root, L3HeirarchyNode node)
+        public L3HierarchyNodeElement(VisualElement root, L3HierarchyNode node)
         {
             this.root = root;
             this.node = node;
@@ -30,7 +30,7 @@ namespace Less3.Heirarchy.Editor
         public void UpdateContent()
         {
             // * Title
-            if (node is IHeirarchyNodeTitle titleNode)
+            if (node is IHierarchyNodeTitle titleNode)
             {
                 title.text = titleNode.NodeTitle;
             }
@@ -40,7 +40,7 @@ namespace Less3.Heirarchy.Editor
             }
 
             // * Subtitle
-            if (node is IHeirarchyNodeSubTitle subTitleNode)
+            if (node is IHierarchyNodeSubTitle subTitleNode)
             {
                 if (string.IsNullOrEmpty(subTitleNode.NodeSubTitle))
                 {
@@ -58,7 +58,7 @@ namespace Less3.Heirarchy.Editor
             }
 
             // * Icon
-            if (node is IHeirarchyNodeIcon iconNode && iconNode.NodeIcon != null)
+            if (node is IHierarchyNodeIcon iconNode && iconNode.NodeIcon != null)
             {
                 icon.style.backgroundImage = new StyleBackground(iconNode.NodeIcon);
                 icon.style.display = DisplayStyle.Flex;
@@ -69,7 +69,7 @@ namespace Less3.Heirarchy.Editor
                 icon.style.display = DisplayStyle.None;
             }
 
-            if (node is IHeirarchyNodeOpacity opacityNode)
+            if (node is IHierarchyNodeOpacity opacityNode)
             {
                 root.style.opacity = opacityNode.NodeOpacity;
             }

@@ -2,24 +2,24 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Less3.Heirachy
+namespace Less3.Hierarchy
 {
-    public abstract class L3Heirarchy : ScriptableObject
+    public abstract class L3Hierarchy : ScriptableObject
     {
         [SerializeField, HideInInspector]
         private int serializedVersion = 1;// For future use (maybe)
 
-        public List<L3HeirarchyNode> nodes = new List<L3HeirarchyNode>();
+        public List<L3HierarchyNode> nodes = new List<L3HierarchyNode>();
         public Action OnTreeRefreshRequired_EDITOR;
 
-        protected virtual bool CustomParentActionValidation(L3HeirarchyNode node, L3HeirarchyNode newParent)
+        protected virtual bool CustomParentActionValidation(L3HierarchyNode node, L3HierarchyNode newParent)
         {
             return true;
         }
         /// <summary>
         /// returns true if the node can be parented to the new parent.
         /// </summary>
-        public bool ValidateParentAction(L3HeirarchyNode node, L3HeirarchyNode newParent)
+        public bool ValidateParentAction(L3HierarchyNode node, L3HierarchyNode newParent)
         {
             if (node == null)
                 return false;
@@ -27,7 +27,7 @@ namespace Less3.Heirachy
             if (node == newParent)
                 return false;
 
-            if (newParent != null && node.heirarchy != newParent.heirarchy)
+            if (newParent != null && node.Hierarchy != newParent.Hierarchy)
                 return false;
 
             // you try to parent an object to one of its children
@@ -37,12 +37,12 @@ namespace Less3.Heirachy
             return CustomParentActionValidation(node, newParent);
         }
 
-        public bool NodeIsChildOfParent(L3HeirarchyNode node, L3HeirarchyNode parent)
+        public bool NodeIsChildOfParent(L3HierarchyNode node, L3HierarchyNode parent)
         {
             if (node == null || parent == null)
                 return false;
 
-            L3HeirarchyNode current = node.parent;
+            L3HierarchyNode current = node.parent;
             while (current != null)
             {
                 if (current == parent)

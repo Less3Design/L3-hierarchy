@@ -1,11 +1,11 @@
-using Less3.Heirarchy;
+using Less3.Hierarchy;
 using Less3.TypeTree;
 using UnityEngine;
 
-namespace Less3.Heirachy
+namespace Less3.Hierarchy
 {
-    [TypeTreeMenu(typeof(ExHeiarchy), "Example/ExNode")]
-    public class ExNode : L3HeirarchyNode, IHeirarchyNodeSubTitle, IHeirarchyNodeIcon, IHeirarchyNodeTitle, IHeirarchyNodeOpacity
+    [TypeTreeMenu(typeof(ExHierarchy), "Example/ExNode")]
+    public class ExNode : L3HierarchyNode, IHierarchyNodeSubTitle, IHierarchyNodeIcon, IHierarchyNodeTitle, IHierarchyNodeOpacity
     {
         public string title;
         public string NodeTitle => string.IsNullOrEmpty(title) ? name : title;

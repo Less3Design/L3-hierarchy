@@ -1,10 +1,13 @@
 {
-    "name": "Less3.Heirarchy",
-    "rootNamespace": "Less3.Heirarchy",
+    "name": "Less3.Hierarchy.Editor",
+    "rootNamespace": "Less3.Hierarchy.Editor",
     "references": [
-        "Less3.TypeTree"
+        "Less3.TypeTree.Editor",
+        "Less3.Hierarchy"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

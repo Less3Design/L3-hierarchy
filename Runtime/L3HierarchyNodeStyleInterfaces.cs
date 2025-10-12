@@ -1,20 +1,20 @@
 using UnityEngine;
 
-namespace Less3.Heirarchy
+namespace Less3.Hierarchy
 {
-    public interface IHeirarchyNodeTitle
+    public interface IHierarchyNodeTitle
     {
         string NodeTitle { get; }
     }
-    public interface IHeirarchyNodeSubTitle
+    public interface IHierarchyNodeSubTitle
     {
         string NodeSubTitle { get; }
     }
-    public interface IHeirarchyNodeIcon
+    public interface IHierarchyNodeIcon
     {
         Texture2D NodeIcon { get; }
     }
-    public interface IHeirarchyNodeOpacity
+    public interface IHierarchyNodeOpacity
     {
         float NodeOpacity { get; }
     }

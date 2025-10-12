@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Less3.Heirachy
+namespace Less3.Hierarchy
 {
-    public abstract class L3HeirarchyNode : ScriptableObject
+    public abstract class L3HierarchyNode : ScriptableObject
     {
         [SerializeField, HideInInspector]
         private int serializedVersion = 1;// For future use (maybe)
@@ -11,20 +11,20 @@ namespace Less3.Heirachy
         // Nodes are arranged based on each nodes internal parent / child references.
         // Modeled after GameObject transforms.
         [SerializeField, HideInInspector]
-        public L3HeirarchyNode parent;
+        public L3HierarchyNode parent;
         // Order of this list is the order of the children, top / first is index 0
         [SerializeField, HideInInspector]
-        public List<L3HeirarchyNode> children = new List<L3HeirarchyNode>();
+        public List<L3HierarchyNode> children = new List<L3HierarchyNode>();
 
         [SerializeField, HideInInspector]
-        private L3Heirarchy _heirarchy;
-        public L3Heirarchy heirarchy => _heirarchy;
+        private L3Hierarchy _Hierarchy;
+        public L3Hierarchy Hierarchy => _Hierarchy;
 
         public int Index
         {
             get
             {
-                // TODO actually we should return the order of this node in the heirarchy.
+                // TODO actually we should return the order of this node in the Hierarchy.
                 // like compare against all parentless nodes.
                 if (parent == null || parent.children == null)
                     return 0;
@@ -33,9 +33,9 @@ namespace Less3.Heirachy
             }
         }
 
-        public L3HeirarchyNode GetRoot()
+        public L3HierarchyNode GetRoot()
         {
-            L3HeirarchyNode current = this;
+            L3HierarchyNode current = this;
             while (current.parent != null)
             {
                 current = current.parent;
@@ -43,15 +43,15 @@ namespace Less3.Heirachy
             return current;
         }
 
-        public void InitNode(L3Heirarchy heirarchy)
+        public void InitNode(L3Hierarchy Hierarchy)
         {
-            if (_heirarchy != null)
+            if (_Hierarchy != null)
             {
-                Debug.LogWarning("An L3HeirarchyNode can only be initialized once.");
+                Debug.LogWarning("An L3HierarchyNode can only be initialized once.");
                 return;
             }
 
-            this._heirarchy = heirarchy;
+            this._Hierarchy = Hierarchy;
         }
     }
 }
