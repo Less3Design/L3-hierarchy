@@ -13,10 +13,13 @@ namespace Less3.Heirarchy.Editor
     {
         [SerializeField] private VisualTreeAsset m_VisualTreeAsset;// Assigned manually in script inspector.
         [SerializeField] private VisualTreeAsset m_element_VisualTreeAsset;// Assigned manually in script inspector.
-        [SerializeField] private L3Heirarchy target;
+        [SerializeField, HideInInspector] private L3Heirarchy target;
+        [SerializeField] private Texture2D windowIcon;
 
         private TreeView treeView;
         private VisualElement inspectorContainer;
+
+        private Dictionary<int, L3HeirarchyNodeElement> nodeElements = new Dictionary<int, L3HeirarchyNodeElement>();
 
         [OnOpenAsset(1)]
         public static bool DoubleClickAsset(int instanceID, int line)
@@ -46,11 +49,28 @@ namespace Less3.Heirarchy.Editor
                 InitGUI(target);
             }
             Undo.undoRedoPerformed += OnUndoRedoPerformed;
+            EditorApplication.update += Update;//
         }
 
         private void OnDisable()
         {
             Undo.undoRedoPerformed -= OnUndoRedoPerformed;
+            EditorApplication.update -= Update;//
+        }
+
+        private void Update()
+        {
+            if (treeView != null && target != null)
+            {
+                // update selected indexes
+                foreach (int i in treeView.selectedIndices)
+                {
+                    if (nodeElements.ContainsKey(i))
+                    {
+                        nodeElements[i].UpdateContent();
+                    }
+                }
+            }
         }
 
         public static void OpenForAsset(L3Heirarchy asset)
@@ -61,11 +81,12 @@ namespace Less3.Heirarchy.Editor
 
         public void InitGUI(L3Heirarchy heirarchy)
         {
-            this.titleContent = new GUIContent(heirarchy.name);
+            this.titleContent = new GUIContent(heirarchy.name, windowIcon);
             target = heirarchy;
             var root = m_VisualTreeAsset.CloneTree();
             rootVisualElement.Clear();
             rootVisualElement.Add(root);
+            root.Q<Label>("TypeName").text = heirarchy.GetType().Name;
 
             inspectorContainer = root.Q("InspectorContainer");
 
@@ -75,16 +96,21 @@ namespace Less3.Heirarchy.Editor
             {
                 var item = treeView.GetItemDataForIndex<L3HeirarchyNode>(i);
 
-                element.Q<Label>("Title").text = item.name;
-                element.Q<Label>("SubTitle").text = item.name;
-                //element.Q<Label>("SubTitle").style.display = DisplayStyle.None;
+                if (!nodeElements.ContainsKey(item.GetInstanceID()))
+                {
+                    nodeElements[i] = new L3HeirarchyNodeElement(element, item);
+                }
+                else
+                {
+                    Debug.LogError("Already contains element for node index " + i);
+                }
 
                 // add a right click context menu to the element
                 element.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
                 {
                     evt.menu.AppendAction("Add node as Child", (a) =>
                     {
-                        L3TypeTreeWindow.OpenForType(item.GetType(), (type) =>
+                        L3TypeTreeWindow.OpenForType(item.heirarchy.GetType(), (type) =>
                         {
                             var newNode = item.heirarchy.CreateNode(type, item);
                             RefreshTreeView();
@@ -99,7 +125,15 @@ namespace Less3.Heirarchy.Editor
                             RefreshTreeView();
                         }
                     });
+                    evt.StopPropagation();
                 }));
+            };
+            treeView.unbindItem = (element, i) =>
+            {
+                if (nodeElements.ContainsKey(i))
+                {
+                    nodeElements.Remove(i);
+                }
             };
 
             treeView.itemIndexChanged += (idFrom, idTo) =>
@@ -160,6 +194,28 @@ namespace Less3.Heirarchy.Editor
                 UpdateSelction(nodes);
             };
 
+            // * background right click.
+            treeView.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
+            {
+                evt.menu.AppendAction("Add Node", (a) =>
+                {
+                    L3TypeTreeWindow.OpenForType(target.GetType(), (type) =>
+                    {
+                        var newNode = target.CreateNode(type, null);
+                        RefreshTreeView();
+                    });
+                });
+            }));
+
+            root.Q<ToolbarButton>("AddNodeButton").clicked += () =>
+            {
+                L3TypeTreeWindow.OpenForType(target.GetType(), (type) =>
+                {
+                    var newNode = target.CreateNode(type, null);
+                    RefreshTreeView();
+                });
+            };
+
             treeView.SetRootItems(BuildTreeView());
             treeView.autoExpand = true;
             treeView.Rebuild();
@@ -179,6 +235,18 @@ namespace Less3.Heirarchy.Editor
         private void UpdateSelction(List<L3HeirarchyNode> node)
         {
             inspectorContainer.Clear();
+
+            //check if they are all the same type
+            for (int i = 1; i < node.Count; i++)
+            {
+                if (node[i].GetType() != node[0].GetType())
+                {
+                    // they are not the same type
+                    inspectorContainer.Add(new Label("Multiple Different Types Selected"));
+                    return;
+                }
+            }
+
             // create a serialized object of the array
             var serializedObject = new SerializedObject(node.ToArray());
             inspectorContainer.Add(new InspectorElement(serializedObject));

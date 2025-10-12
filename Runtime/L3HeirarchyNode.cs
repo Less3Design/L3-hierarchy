@@ -33,6 +33,16 @@ namespace Less3.Heirachy
             }
         }
 
+        public L3HeirarchyNode GetRoot()
+        {
+            L3HeirarchyNode current = this;
+            while (current.parent != null)
+            {
+                current = current.parent;
+            }
+            return current;
+        }
+
         public void InitNode(L3Heirarchy heirarchy)
         {
             if (_heirarchy != null)

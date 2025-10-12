@@ -16,7 +16,10 @@ MonoBehaviour:
   parent: {fileID: 3028106128299646003}
   children: []
   _heirarchy: {fileID: 11400000}
-  nodeData: 
+  title: 
+  subTitle: 
+  icon: {fileID: 0}
+  disable: 0
 --- !u!114 &-3674565261277920359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,7 +38,10 @@ MonoBehaviour:
   - {fileID: -2415002744956369170}
   - {fileID: 3028106128299646003}
   _heirarchy: {fileID: 11400000}
-  nodeData: 
+  title: 
+  subTitle: 
+  icon: {fileID: 0}
+  disable: 0
 --- !u!114 &-2445608429999651791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,7 +58,10 @@ MonoBehaviour:
   parent: {fileID: 3028106128299646003}
   children: []
   _heirarchy: {fileID: 11400000}
-  nodeData: 
+  title: 
+  subTitle: 
+  icon: {fileID: 0}
+  disable: 0
 --- !u!114 &-2415002744956369170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +78,10 @@ MonoBehaviour:
   parent: {fileID: -3674565261277920359}
   children: []
   _heirarchy: {fileID: 11400000}
-  nodeData: 
+  title: 
+  subTitle: 
+  icon: {fileID: 0}
+  disable: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,4 +120,7 @@ MonoBehaviour:
   - {fileID: -2445608429999651791}
   - {fileID: -8876539295580403858}
   _heirarchy: {fileID: 11400000}
-  nodeData: 
+  title: 
+  subTitle: 
+  icon: {fileID: 0}
+  disable: 0
