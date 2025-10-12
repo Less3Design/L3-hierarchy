@@ -79,7 +79,7 @@ namespace Less3.Hierarchy
 
             var newNode = ScriptableObject.CreateInstance<T>();
             newNode.InitNode(Hierarchy);
-            newNode.name = System.Guid.NewGuid().ToString();
+            newNode.name = typeof(T).Name;
 
             RecordUndoIfAsset(Hierarchy, "Create Node");
             Hierarchy.nodes.Add(newNode);
@@ -113,7 +113,7 @@ namespace Less3.Hierarchy
             }
 
             newNode.InitNode(Hierarchy);
-            newNode.name = System.Guid.NewGuid().ToString();// !
+            newNode.name = nodeType.Name;
 
             RecordUndoIfAsset(Hierarchy, "Create Node");
             Hierarchy.nodes.Add(newNode);
