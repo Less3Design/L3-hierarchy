@@ -2,7 +2,7 @@
   "name": "less3.heirarchy",
   "displayName": "L3 Heirarchy",
   "version": "0.1.0",
-  "unity": "6000",
+  "unity": "6000.0",
   "description": "A simple heirarchy system for scriptable objects in Unity.",
   "author": "Less 3",
   "keywords": [
