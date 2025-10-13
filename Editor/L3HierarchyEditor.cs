@@ -110,7 +110,7 @@ namespace Less3.Hierarchy.Editor
                 {
                     evt.menu.AppendAction("Add node as Child", (a) =>
                     {
-                        L3TypeTreeWindow.OpenForType(item.Hierarchy.GetType(), (type) =>
+                        L3TypeTreeWindow.OpenForType(item.Hierarchy.GetType(), element.worldTransform.GetPosition(), (type) =>
                         {
                             var newNode = item.Hierarchy.CreateNode(type, item);
                             RefreshTreeView();
@@ -195,21 +195,24 @@ namespace Less3.Hierarchy.Editor
             };
 
             // * background right click.
+            /*
             treeView.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
             {
                 evt.menu.AppendAction("Add Node", (a) =>
                 {
-                    L3TypeTreeWindow.OpenForType(target.GetType(), (type) =>
+                    L3TypeTreeWindow.OpenForType(target.GetType(), evt.mousePosition, (type) =>
                     {
                         var newNode = target.CreateNode(type, null);
                         RefreshTreeView();
                     });
                 });
             }));
+            */
 
-            root.Q<ToolbarButton>("AddNodeButton").clicked += () =>
+            var addButton = root.Q<ToolbarButton>("AddNodeButton");
+            addButton.clicked += () =>
             {
-                L3TypeTreeWindow.OpenForType(target.GetType(), (type) =>
+                L3TypeTreeWindow.OpenForType(target.GetType(), addButton.worldTransform.GetPosition(), (type) =>
                 {
                     var newNode = target.CreateNode(type, null);
                     RefreshTreeView();
