@@ -1,3 +1,4 @@
+#if LESS3_EXAMPLES
 using Less3.Hierarchy;
 using Less3.TypeTree;
 using UnityEngine;
@@ -17,3 +18,4 @@ namespace Less3.Hierarchy
         public float NodeOpacity => disable ? 0.5f : 1f;
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if LESS3_EXAMPLES
 using Less3.Hierarchy;
 using Less3.TypeTree;
 using UnityEngine;
@@ -9,3 +10,4 @@ namespace Less3.Hierarchy
     {
     }
 }
+#endif
