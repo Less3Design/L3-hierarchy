@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: 10b9541e-b47d-43dd-a3db-86e0c27115e7
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: 0}
+  parent: {fileID: 4930540586609484345}
   children: []
   _Hierarchy: {fileID: 11400000}
-  title: 
+  title: Child
   subTitle: 
   icon: {fileID: 0}
-  disable: 0
+  disable: 1
 --- !u!114 &-5220069532767196286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +60,26 @@ MonoBehaviour:
   subTitle: 
   icon: {fileID: 0}
   disable: 0
+--- !u!114 &-1807717502225057983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
+  m_Name: ExNode
+  m_EditorClassIdentifier: 
+  serializedVersion: 1
+  parent: {fileID: 0}
+  children: []
+  _Hierarchy: {fileID: 11400000}
+  title: 
+  subTitle: 
+  icon: {fileID: 0}
+  disable: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +100,9 @@ MonoBehaviour:
   - {fileID: 3702596250710622640}
   - {fileID: -3984711146536898025}
   - {fileID: -5778043752408045129}
+  - {fileID: 8709591293006862449}
+  - {fileID: 5665055035418392638}
+  - {fileID: -1807717502225057983}
   HierarchyData: 
 --- !u!114 &1303314090725584845
 MonoBehaviour:
@@ -98,7 +121,7 @@ MonoBehaviour:
   children: []
   _Hierarchy: {fileID: 11400000}
   title: Child
-  subTitle: Intresting information
+  subTitle: 
   icon: {fileID: 0}
   disable: 0
 --- !u!114 &3702596250710622640
@@ -138,9 +161,47 @@ MonoBehaviour:
   parent: {fileID: 0}
   children:
   - {fileID: 1303314090725584845}
+  - {fileID: 8709591293006862449}
   - {fileID: -5220069532767196286}
+  - {fileID: -5778043752408045129}
   _Hierarchy: {fileID: 11400000}
   title: <b>Root
   subTitle: 
   icon: {fileID: 2800000, guid: b9be5fe2d6b7e2c4a86325997e201f9f, type: 3}
+  disable: 0
+--- !u!114 &5665055035418392638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f1951aeadff5343be6da4fa2a62843, type: 3}
+  m_Name: ExNodeOther
+  m_EditorClassIdentifier: 
+  serializedVersion: 1
+  parent: {fileID: 0}
+  children: []
+  _Hierarchy: {fileID: 11400000}
+--- !u!114 &8709591293006862449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
+  m_Name: ExNode
+  m_EditorClassIdentifier: 
+  serializedVersion: 1
+  parent: {fileID: 4930540586609484345}
+  children: []
+  _Hierarchy: {fileID: 11400000}
+  title: 
+  subTitle: 
+  icon: {fileID: 0}
   disable: 0
