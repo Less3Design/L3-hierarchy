@@ -54,6 +54,28 @@ namespace Less3.Hierarchy
             return false;
         }
 
+        public List<L3HierarchyNode> GetRootNodes()
+        {
+            List<L3HierarchyNode> rootNodes = new List<L3HierarchyNode>();
+            foreach (var node in nodes)
+            {
+                if (node.parent == null)
+                    rootNodes.Add(node);
+            }
+            return rootNodes;
+        }
+
+        public List<T> GetRootNodesOfType<T>() where T : L3HierarchyNode
+        {
+            List<T> rootNodes = new List<T>();
+            foreach (var node in nodes)
+            {
+                if (node.parent == null && node is T tNode)
+                    rootNodes.Add(tNode);
+            }
+            return rootNodes;
+        }
+
         public void UpdateTree_EDITOR()
         {
             OnTreeRefreshRequired_EDITOR?.Invoke();

@@ -43,6 +43,43 @@ namespace Less3.Hierarchy
             return current;
         }
 
+        public L3HierarchyNode GetChildAtIndex(int index)
+        {
+            if (index < 0 || index >= children.Count)
+                return null;
+
+            return children[index];
+        }
+
+        public int GetChildIndex(L3HierarchyNode child)
+        {
+            if (child == null)
+                return -1;
+
+            return children.IndexOf(child);
+        }
+
+        /// <summary>
+        /// Returns a copy of the children list.
+        /// </summary>
+        public List<L3HierarchyNode> GetChildren()
+        {
+            return new List<L3HierarchyNode>(children);
+        }
+
+        public List<T> GetChildrenOfType<T>() where T : L3HierarchyNode
+        {
+            List<T> typedChildren = new List<T>();
+            foreach (var child in children)
+            {
+                if (child is T typedChild)
+                {
+                    typedChildren.Add(typedChild);
+                }
+            }
+            return typedChildren;
+        }
+
         public void InitNode(L3Hierarchy Hierarchy)
         {
             if (_Hierarchy != null)
