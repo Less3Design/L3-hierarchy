@@ -58,19 +58,19 @@
 }
 
 .RoundedPanel {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    border-bottom-right-radius: 9px;
+    border-bottom-left-radius: 9px;
     overflow: hidden;
-}
-
-.RoundedPanel {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    overflow: hidden;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: var(--unity-colors-toolbar-border);
+    border-left-color: var(--unity-colors-toolbar-border);
+    border-bottom-color: var(--unity-colors-toolbar-border);
+    border-right-color: var(--unity-colors-toolbar-border);
 }
 
 .HeirarchyTypeName {
