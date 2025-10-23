@@ -159,6 +159,7 @@ namespace Less3.Hierarchy.Editor
                         {
                             var newNode = item.Hierarchy.CreateNode(type, item);
                             RefreshTreeView();
+                            ForceSelectNode(newNode);
                         });
                     });
                     evt.menu.AppendAction("Delete Node", (a) =>
@@ -261,6 +262,7 @@ namespace Less3.Hierarchy.Editor
                 {
                     var newNode = target.CreateNode(type, null);
                     RefreshTreeView();
+                    ForceSelectNode(newNode);
                 });
             };
 
@@ -280,6 +282,7 @@ namespace Less3.Hierarchy.Editor
                     {
                         var newNode = target.CreateNode(type, selectedNodes[0]);
                         RefreshTreeView();
+                        ForceSelectNode(newNode);
                     });
                 }
                 else
@@ -358,6 +361,20 @@ namespace Less3.Hierarchy.Editor
             {
                 selectedObjName.text = $"{node.Count} Nodes Selected";
             }
+        }
+
+        private void ForceSelectNode(L3HierarchyNode node)
+        {
+            List<int> indices = new List<int>();
+            foreach (var kvp in nodeElements)
+            {
+                if (kvp.Value.node == node)
+                {
+                    indices.Add(kvp.Key);
+                    break;
+                }
+            }
+            treeView.SetSelection(indices);
         }
 
         private List<TreeViewItemData<L3HierarchyNode>> BuildTreeView()
