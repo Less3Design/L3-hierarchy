@@ -23,9 +23,9 @@
 }
 
 .ElementContainer {
-    padding-top: 3px;
+    padding-top: 2px;
     padding-right: 3px;
-    padding-bottom: 3px;
+    padding-bottom: 2px;
     padding-left: 3px;
 }
 
