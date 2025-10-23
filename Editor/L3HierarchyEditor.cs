@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEditor.Callbacks;
 using UnityEditor.UIElements;
 using Less3.TypeTree.Editor;
+using System.Linq;
 
 namespace Less3.Hierarchy.Editor
 {
@@ -93,11 +94,46 @@ namespace Less3.Hierarchy.Editor
             root.Q<Label>("TypeName").text = Hierarchy.GetType().Name;
             root.Q<Label>("ObjName").text = Hierarchy.name;
 
-
             inspectorContainer = root.Q("InspectorContainer");
             inspectorRoot = root.Q("InspectorRoot");
             selectedTypeName = root.Q<Label>("SelectedType");
             selectedObjName = root.Q<Label>("SelectedName");
+
+            // heirarchy type open
+            root.Q<Label>("TypeName").AddManipulator(new Clickable(() =>
+            {
+                //open the object type script in script editor
+                //get the m_script
+                var so = new SerializedObject(target);
+                var m_script = so.FindProperty("m_Script").objectReferenceValue;
+                AssetDatabase.OpenAsset(m_script);
+            }));
+
+            // selected obj type open
+            selectedTypeName.AddManipulator(new Clickable(() =>
+            {
+                //open the object type script in script editor
+                //get the m_script
+                List<L3HierarchyNode> selectedNodes = new List<L3HierarchyNode>();
+                foreach (int index in treeView.selectedIndices)
+                {
+                    var node = treeView.GetItemDataForIndex<L3HierarchyNode>(index);
+                    selectedNodes.Add(node);
+                }
+
+                if (selectedNodes.Count > 0)
+                {
+                    //if all types are the same
+                    if (selectedNodes.All(n => n.GetType() == selectedNodes[0].GetType()))
+                    {
+                        var so = new SerializedObject(selectedNodes[0]);
+                        var m_script = so.FindProperty("m_Script").objectReferenceValue;
+                        AssetDatabase.OpenAsset(m_script);
+                    }
+                }
+            }));
+
+
 
             treeView = root.Q<TreeView>("TreeView");
             treeView.makeItem = () => m_element_VisualTreeAsset.CloneTree();
@@ -291,7 +327,13 @@ namespace Less3.Hierarchy.Editor
                     // they are not the same type
                     selectedTypeName.text = "---";
                     selectedObjName.text = "";
-                    inspectorContainer.Add(new Label("Multiple Different Types Selected"));
+                    var label = new Label("Multiple Different Types Selected");
+                    label.style.paddingBottom = 16;
+                    label.style.paddingTop = 16;
+                    label.style.paddingLeft = 16;
+                    label.style.paddingRight = 16;
+
+                    inspectorContainer.Add(label);
                     return;
                 }
             }
