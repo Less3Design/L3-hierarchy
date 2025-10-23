@@ -76,4 +76,6 @@
 .HeirarchyTypeName {
     -unity-font-style: bold;
     -unity-text-align: middle-left;
+    border-right-width: 1px;
+    border-right-color: var(--unity-colors-toolbar-border);
 }
