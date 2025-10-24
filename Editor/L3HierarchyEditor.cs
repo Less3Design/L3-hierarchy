@@ -18,6 +18,7 @@ namespace Less3.Hierarchy.Editor
         [SerializeField] private Texture2D windowIcon;
 
         private TreeView treeView;
+        private VisualElement rootContainer;
         private VisualElement inspectorContainer;
         private VisualElement inspectorRoot;
 
@@ -75,6 +76,18 @@ namespace Less3.Hierarchy.Editor
                         nodeElements[i].UpdateContent();
                     }
                 }
+
+                if (rootContainer != null)
+                {
+                    if (rootContainer.resolvedStyle.width > 800)
+                    {
+                        rootContainer.style.flexDirection = FlexDirection.Row;
+                    }
+                    else
+                    {
+                        rootContainer.style.flexDirection = FlexDirection.Column;
+                    }
+                }
             }
         }
 
@@ -89,6 +102,7 @@ namespace Less3.Hierarchy.Editor
             this.titleContent = new GUIContent(Hierarchy.name, windowIcon);
             target = Hierarchy;
             var root = m_VisualTreeAsset.CloneTree();
+            rootContainer = root.Q<VisualElement>("RootContainer");
             rootVisualElement.Clear();
             rootVisualElement.Add(root);
             root.Q<Label>("TypeName").text = Hierarchy.GetType().Name;
