@@ -79,3 +79,25 @@
     border-right-width: 1px;
     border-right-color: var(--unity-colors-toolbar-border);
 }
+
+.ElementAlternateBackground {
+    background-color: var(--unity-colors-default-background);
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.15);
+    border-top-width: 1px;
+    border-left-color: rgba(0, 0, 0, 0.15);
+    border-right-color: rgba(0, 0, 0, 0.15);
+    border-top-color: rgba(0, 0, 0, 0.15);
+}
+
+.ElementAlternateBackground:selected {
+    background-color: var(--unity-colors-highlight-background);
+}
+
+.ElementAlternateBackground:hover {
+    background-color: var(--unity-colors-app_toolbar-background);
+}
+
+.ElementAlternateBackground:selected:hover {
+    background-color: var(--unity-colors-highlight-background);
+}

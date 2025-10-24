@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Less3.Hierarchy
 {
     [TypeTreeMenu(typeof(ExHierarchy), "Example/ExNode")]
-    public class ExNode : L3HierarchyNode, IHierarchyNodeSubTitle, IHierarchyNodeIcon, IHierarchyNodeTitle, IHierarchyNodeOpacity
+    public class ExNode : L3HierarchyNode, IHierarchyNodeSubTitle, IHierarchyNodeIcon, IHierarchyNodeTitle, IHierarchyNodeOpacity, IHierarchyAlternateBackground
     {
         public string title;
         public string NodeTitle => string.IsNullOrEmpty(title) ? name : title;
@@ -16,6 +16,8 @@ namespace Less3.Hierarchy
         public Texture2D NodeIcon => icon;
         public bool disable;
         public float NodeOpacity => disable ? 0.5f : 1f;
+        public bool alternate;
+        public bool UseAlternateBackground => alternate;
     }
 }
 #endif

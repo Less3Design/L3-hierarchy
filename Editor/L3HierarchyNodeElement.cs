@@ -77,6 +77,22 @@ namespace Less3.Hierarchy.Editor
             {
                 root.style.opacity = 1f;
             }
+
+            if (node is IHierarchyAlternateBackground alternateBackgroundNode)
+            {
+                if (alternateBackgroundNode.UseAlternateBackground)
+                {
+                    root.parent.parent.AddToClassList("ElementAlternateBackground");
+                }
+                else
+                {
+                    root.parent.parent.RemoveFromClassList("ElementAlternateBackground");
+                }
+            }
+            else
+            {
+                root.parent.parent.RemoveFromClassList("ElementAlternateBackground");
+            }
         }
     }
 }

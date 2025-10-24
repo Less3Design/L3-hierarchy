@@ -55,6 +55,7 @@ MonoBehaviour:
   subTitle: 
   icon: {fileID: 0}
   disable: 0
+  alternate: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +98,7 @@ MonoBehaviour:
   subTitle: 
   icon: {fileID: 0}
   disable: 0
+  alternate: 0
 --- !u!114 &4721306581972926248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +120,7 @@ MonoBehaviour:
   subTitle: 
   icon: {fileID: 0}
   disable: 0
+  alternate: 1
 --- !u!114 &8686614541451377623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,3 +141,4 @@ MonoBehaviour:
   subTitle: 
   icon: {fileID: 0}
   disable: 0
+  alternate: 0

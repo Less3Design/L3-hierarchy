@@ -18,4 +18,8 @@ namespace Less3.Hierarchy
     {
         float NodeOpacity { get; }
     }
+    public interface IHierarchyAlternateBackground
+    {
+        bool UseAlternateBackground { get; }
+    }
 }
