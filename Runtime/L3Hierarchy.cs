@@ -9,6 +9,7 @@ namespace Less3.Hierarchy
         [SerializeField, HideInInspector]
         private int serializedVersion = 1;// For future use (maybe)
 
+        [HideInInspector]
         public List<L3HierarchyNode> nodes = new List<L3HierarchyNode>();
         public Action OnTreeRefreshRequired_EDITOR;
 
