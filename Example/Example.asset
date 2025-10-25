@@ -1,5 +1,26 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8732131888469868713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
+  m_Name: ExNode
+  m_EditorClassIdentifier: 
+  serializedVersion: 1
+  parent: {fileID: 0}
+  children: []
+  _Hierarchy: {fileID: 11400000}
+  title: 
+  subTitle: 
+  icon: {fileID: 0}
+  disable: 0
+  alternate: 0
 --- !u!114 &-7668124675736762529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,9 +35,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedVersion: 1
   parent: {fileID: 0}
-  children:
-  - {fileID: -1807717502225057983}
-  - {fileID: 908840536353822875}
+  children: []
   _Hierarchy: {fileID: 11400000}
   title: 
   subTitle: asdfasdfasdf
@@ -36,7 +55,7 @@ MonoBehaviour:
   m_Name: ExNode
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: -7668124675736762529}
+  parent: {fileID: 0}
   children: []
   _Hierarchy: {fileID: 11400000}
   title: 
@@ -58,11 +77,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedVersion: 1
   parent: {fileID: 0}
-  children:
-  - {fileID: 827376509552845386}
-  - {fileID: -239164562175585315}
+  children: []
   _Hierarchy: {fileID: 11400000}
-  title: 
+  title: aaaaaaaaaaaaaaaaaaaaaa
   subTitle: asdfasdfasdf
   icon: {fileID: 0}
   disable: 0
@@ -80,7 +97,7 @@ MonoBehaviour:
   m_Name: ExNodeOther
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: -830635383649182872}
+  parent: {fileID: 0}
   children: []
   _Hierarchy: {fileID: 11400000}
 --- !u!114 &11400000
@@ -97,12 +114,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedVersion: 1
   nodes:
-  - {fileID: -1807717502225057983}
-  - {fileID: -830635383649182872}
   - {fileID: 908840536353822875}
-  - {fileID: 827376509552845386}
-  - {fileID: -239164562175585315}
   - {fileID: -7668124675736762529}
+  - {fileID: -239164562175585315}
+  - {fileID: -8732131888469868713}
+  - {fileID: 827376509552845386}
+  - {fileID: -830635383649182872}
+  - {fileID: -1807717502225057983}
   HierarchyData: 
 --- !u!114 &827376509552845386
 MonoBehaviour:
@@ -117,7 +135,7 @@ MonoBehaviour:
   m_Name: ExNodeOther
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: -830635383649182872}
+  parent: {fileID: 0}
   children: []
   _Hierarchy: {fileID: 11400000}
 --- !u!114 &908840536353822875
@@ -133,7 +151,7 @@ MonoBehaviour:
   m_Name: ExNode
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: -7668124675736762529}
+  parent: {fileID: 0}
   children: []
   _Hierarchy: {fileID: 11400000}
   title: 

@@ -24,6 +24,7 @@ namespace Less3.Hierarchy.Editor
 
         private Label selectedTypeName;
         private Label selectedObjName;
+        private int lastEventFrame = -1;
 
         private Dictionary<int, L3HierarchyNodeElement> nodeElements = new Dictionary<int, L3HierarchyNodeElement>();
 
@@ -198,6 +199,9 @@ namespace Less3.Hierarchy.Editor
 
             treeView.itemIndexChanged += (idFrom, idTo) =>
             {
+                if (lastEventFrame == Time.frameCount)
+                    return;
+
                 // global index
                 int destinationIndex = treeView.viewController.GetIndexForId(idFrom);
                 int parentIndex = treeView.viewController.GetIndexForId(idTo);
@@ -208,24 +212,46 @@ namespace Less3.Hierarchy.Editor
                 var newParent = treeView.GetItemDataForId<L3HierarchyNode>(idTo);
 
                 List<L3HierarchyNode> nodesToMove = new List<L3HierarchyNode>();
-                foreach (int index in treeView.selectedIndices)
+                List<int> orderedIndexes = treeView.selectedIndices.OrderByDescending(i => i).ToList();
+                foreach (int index in orderedIndexes)
                 {
                     var child = treeView.GetItemDataForIndex<L3HierarchyNode>(index);
                     nodesToMove.Add(child);
                 }
 
                 int i = 0;
+                //* Set nodes as root nodes + reorder roots
                 if (newParent == null)
                 {
+                    int d = destinationIndex - 1;
+                    int precedingRootIndex = -1;
+                    while (d >= 0)
+                    {
+                        var n = treeView.GetItemDataForIndex<L3HierarchyNode>(Mathf.Max(0, d));
+                        if (n.parent == null && nodesToMove.Contains(n) == false)
+                        {
+                            precedingRootIndex = d;
+                            break;
+                        }
+                        d--;
+                    }
+
+                    L3HierarchyNode precedingRootNode = null;
+                    if (precedingRootIndex != -1)
+                    {
+                        precedingRootNode = treeView.GetItemDataForIndex<L3HierarchyNode>(precedingRootIndex);
+                    }
+
                     foreach (var n in nodesToMove)
                     {
-                        if (n.Hierarchy.ValidateParentAction(n, newParent))
+                        if (n.Hierarchy.ValidateParentAction(n, null))
                         {
-                            n.ReleaseParentAction(siblingIndex + i);
-                            i++;
+                            n.Hierarchy.ReorderRootAction(n, precedingRootNode);// releases parents & sets as root with order.
                         }
+                        precedingRootNode = n;
                     }
                 }
+                // * Set nodes as children to some node
                 else
                 {
                     foreach (var n in nodesToMove)
@@ -237,6 +263,8 @@ namespace Less3.Hierarchy.Editor
                         }
                     }
                 }
+
+                lastEventFrame = Time.frameCount;
                 nodeMoved.Hierarchy.UpdateTree_EDITOR();
                 RefreshTreeView();// todo remove.
             };

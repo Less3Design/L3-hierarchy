@@ -60,7 +60,7 @@ namespace Less3.Hierarchy
             node.SetIndex(newIndex);
         }
 
-        public static bool ReleaseParentAction(this L3HierarchyNode node, int siblingIndex)
+        public static bool ReleaseParentAction(this L3HierarchyNode node)
         {
             if (node.parent != null)
             {
@@ -70,6 +70,29 @@ namespace Less3.Hierarchy
 
             node.RemoveParent();
             return true;
+        }
+
+        public static void ReorderRootAction(this L3Hierarchy hierarchy, L3HierarchyNode nodeToMove, L3HierarchyNode precedingNode)
+        {
+            if (hierarchy == null || nodeToMove == null)
+                return;
+
+            RecordUndoIfAsset(nodeToMove, "Reorder Root Nodes");
+            RecordUndoIfAsset(nodeToMove.parent, "Reorder Root Nodes");
+            RecordUndoIfAsset(hierarchy, "Reorder Root Nodes");
+
+            nodeToMove.RemoveParent();
+
+            hierarchy.nodes.Remove(nodeToMove);
+
+            int newIndex = 0;
+            if (precedingNode != null)
+            {
+                newIndex = hierarchy.nodes.IndexOf(precedingNode) + 1;
+            }
+
+            hierarchy.nodes.Insert(newIndex, nodeToMove);
+            SetDirtyIfAsset(hierarchy);
         }
 
         public static T CreateNode<T>(this L3Hierarchy Hierarchy, L3HierarchyNode parent = null) where T : L3HierarchyNode
@@ -246,6 +269,8 @@ namespace Less3.Hierarchy
         // Helpers to make this all work nice in editor or runtime
         private static void RecordUndoIfAsset(Object obj, string actionName)
         {
+            if (obj == null)
+                return;
 #if UNITY_EDITOR
             if (AssetDatabase.Contains(obj))
             {
@@ -256,6 +281,8 @@ namespace Less3.Hierarchy
 
         private static void SetDirtyIfAsset(Object obj)
         {
+            if (obj == null)
+                return;
 #if UNITY_EDITOR
             if (AssetDatabase.Contains(obj))
             {
@@ -278,6 +305,8 @@ namespace Less3.Hierarchy
 
         private static void SaveObjectIfAsset(Object obj)
         {
+            if (obj == null)
+                return;
 #if UNITY_EDITOR
             if (AssetDatabase.Contains(obj))
             {
