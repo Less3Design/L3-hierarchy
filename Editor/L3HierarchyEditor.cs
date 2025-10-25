@@ -175,7 +175,7 @@ namespace Less3.Hierarchy.Editor
                         evt.menu.AppendAction($"{treeView.selectedIndices.Count()} Nodes Selected", (e) => { }, DropdownMenuAction.Status.Disabled);
                         return;
                     }
-                    evt.menu.AppendAction("Add node as Child", (a) =>
+                    evt.menu.AppendAction("Add Child", (a) =>
                     {
                         L3TypeTreeWindow.OpenForType(item.Hierarchy.GetType(), element.worldTransform.GetPosition(), (type) =>
                         {
