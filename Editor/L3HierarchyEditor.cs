@@ -169,6 +169,12 @@ namespace Less3.Hierarchy.Editor
                 element.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
                 {
                     evt.menu.ClearItems();// children separators somehow (sometimes) pile up here unless we clear???
+
+                    if (treeView.selectedIndices.Count() > 1)
+                    {
+                        evt.menu.AppendAction($"{treeView.selectedIndices.Count()} Nodes Selected", (e) => { }, DropdownMenuAction.Status.Disabled);
+                        return;
+                    }
                     evt.menu.AppendAction("Add node as Child", (a) =>
                     {
                         L3TypeTreeWindow.OpenForType(item.Hierarchy.GetType(), element.worldTransform.GetPosition(), (type) =>
@@ -181,7 +187,7 @@ namespace Less3.Hierarchy.Editor
                     evt.menu.AppendSeparator();
                     evt.menu.AppendAction("Duplicate Node", (a) =>
                     {
-                        var newNode =item.Hierarchy.DuplicateNodeAction(item);
+                        var newNode = item.Hierarchy.DuplicateNodeAction(item);
                         RefreshTreeView();
                         ForceSelectNode(newNode);
                     });
