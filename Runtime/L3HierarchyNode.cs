@@ -5,8 +5,10 @@ namespace Less3.Hierarchy
 {
     public abstract class L3HierarchyNode : ScriptableObject
     {
+#pragma warning disable 0414
         [SerializeField, HideInInspector]
         private int serializedVersion = 1;// For future use (maybe)
+#pragma warning restore 0414
 
         // Nodes are arranged based on each nodes internal parent / child references.
         // Modeled after GameObject transforms.

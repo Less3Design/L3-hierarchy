@@ -1,26 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8511885707729029100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
-  m_Name: ExNode Copy Copy
-  m_EditorClassIdentifier: 
-  serializedVersion: 1
-  parent: {fileID: 6084053674240055266}
-  children: []
-  _Hierarchy: {fileID: 11400000}
-  title: 
-  subTitle: 
-  icon: {fileID: 0}
-  disable: 0
-  alternate: 0
 --- !u!114 &-7396700270609634370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,28 +17,6 @@ MonoBehaviour:
   children:
   - {fileID: -1024354495665039639}
   _Hierarchy: {fileID: 11400000}
---- !u!114 &-5613461145533642575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
-  m_Name: ExNode Copy
-  m_EditorClassIdentifier: 
-  serializedVersion: 1
-  parent: {fileID: 4921922542218425080}
-  children:
-  - {fileID: 8445191795365123305}
-  _Hierarchy: {fileID: 11400000}
-  title: 
-  subTitle: 
-  icon: {fileID: 0}
-  disable: 0
-  alternate: 0
 --- !u!114 &-5200578130566944477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +30,7 @@ MonoBehaviour:
   m_Name: ExNodeOther Copy
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: -4801609507747610548}
+  parent: {fileID: 0}
   children:
   - {fileID: 1285072936502401978}
   _Hierarchy: {fileID: 11400000}
@@ -93,30 +50,12 @@ MonoBehaviour:
   parent: {fileID: 0}
   children:
   - {fileID: -7396700270609634370}
-  - {fileID: -5200578130566944477}
   _Hierarchy: {fileID: 11400000}
   title: 
   subTitle: 
   icon: {fileID: 0}
   disable: 0
   alternate: 0
---- !u!114 &-4107301047435446892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f1951aeadff5343be6da4fa2a62843, type: 3}
-  m_Name: ExNodeOther Copy Copy
-  m_EditorClassIdentifier: 
-  serializedVersion: 1
-  parent: {fileID: 3937150361575465792}
-  children:
-  - {fileID: 6084053674240055266}
-  _Hierarchy: {fileID: 11400000}
 --- !u!114 &-1024354495665039639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,20 +92,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedVersion: 1
   nodes:
+  - {fileID: -5200578130566944477}
   - {fileID: -4801609507747610548}
   - {fileID: -7396700270609634370}
   - {fileID: -1024354495665039639}
   - {fileID: 1214819641227112489}
-  - {fileID: -5200578130566944477}
   - {fileID: 1285072936502401978}
   - {fileID: 8564628368100467936}
-  - {fileID: 3937150361575465792}
-  - {fileID: 4921922542218425080}
-  - {fileID: -5613461145533642575}
-  - {fileID: 8445191795365123305}
-  - {fileID: -4107301047435446892}
-  - {fileID: 6084053674240055266}
-  - {fileID: -8511885707729029100}
   HierarchyData: 
 --- !u!114 &1214819641227112489
 MonoBehaviour:
@@ -205,89 +137,6 @@ MonoBehaviour:
   parent: {fileID: -5200578130566944477}
   children:
   - {fileID: 8564628368100467936}
-  _Hierarchy: {fileID: 11400000}
-  title: 
-  subTitle: 
-  icon: {fileID: 0}
-  disable: 0
-  alternate: 0
---- !u!114 &3937150361575465792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
-  m_Name: ExNode Copy
-  m_EditorClassIdentifier: 
-  serializedVersion: 1
-  parent: {fileID: 0}
-  children:
-  - {fileID: 4921922542218425080}
-  - {fileID: -4107301047435446892}
-  _Hierarchy: {fileID: 11400000}
-  title: 
-  subTitle: 
-  icon: {fileID: 0}
-  disable: 0
-  alternate: 0
---- !u!114 &4921922542218425080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f1951aeadff5343be6da4fa2a62843, type: 3}
-  m_Name: ExNodeOther Copy
-  m_EditorClassIdentifier: 
-  serializedVersion: 1
-  parent: {fileID: 3937150361575465792}
-  children:
-  - {fileID: -5613461145533642575}
-  _Hierarchy: {fileID: 11400000}
---- !u!114 &6084053674240055266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
-  m_Name: ExNode Copy Copy
-  m_EditorClassIdentifier: 
-  serializedVersion: 1
-  parent: {fileID: -4107301047435446892}
-  children:
-  - {fileID: -8511885707729029100}
-  _Hierarchy: {fileID: 11400000}
-  title: 
-  subTitle: 
-  icon: {fileID: 0}
-  disable: 0
-  alternate: 0
---- !u!114 &8445191795365123305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0036c81a2759ebd4592962b3b27a5e36, type: 3}
-  m_Name: ExNode Copy
-  m_EditorClassIdentifier: 
-  serializedVersion: 1
-  parent: {fileID: -5613461145533642575}
-  children: []
   _Hierarchy: {fileID: 11400000}
   title: 
   subTitle: 

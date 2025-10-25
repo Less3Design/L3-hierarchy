@@ -6,8 +6,11 @@ namespace Less3.Hierarchy
 {
     public abstract class L3Hierarchy : ScriptableObject
     {
+        // hide the variable not used warning
+#pragma warning disable 0414
         [SerializeField, HideInInspector]
         private int serializedVersion = 1;// For future use (maybe)
+#pragma warning restore 0414
 
         [HideInInspector]
         public List<L3HierarchyNode> nodes = new List<L3HierarchyNode>();
