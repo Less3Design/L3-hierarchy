@@ -1,11 +1,47 @@
 using Less3.Hierarchy;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 namespace Less3.Hierarchy
 {
+#if UNITY_EDITOR
+    [InitializeOnLoad]
+    public static class L3HierarchyUndoManager
+    {
+        public static string DUPLICATE_KEY = "Duplicate Node (L3Hierarchy)";
+        static L3HierarchyUndoManager()
+        {
+            Undo.undoRedoEvent += OnEvent;
+        }
+
+        // ? Solving some janky undo/redo stuff here. Im pretty sure i just dont know what im doing.
+        //   When we REDO an UNDONE duplication, it seems like unity doesnt support that? We are ressurecting deleted objects..?
+        //   Im really not sure...  So the following just clears the REDO stack after undoing a duplication.
+        private static void OnEvent(in UndoRedoInfo args)
+        {
+            if (args.undoName == DUPLICATE_KEY)
+            {
+                // add to post event
+                EditorApplication.delayCall += ClearRedo;
+            }
+        }
+
+        private static void ClearRedo()
+        {
+            var temp = ScriptableObject.CreateInstance<ScriptableObject>();
+            Undo.RegisterCreatedObjectUndo(temp, "CLEAR REDO STACK (L3Hierarchy)");
+            // Destroy it immediately—still clears redo
+            Object.DestroyImmediate(temp, true);
+        }
+    }
+#endif
+
     /// <summary>
     /// Holds all the methods like "add node" and "set parent" for manipulating heirarchies and nodes.
     /// Methods are valid to be used in editor and runtime.
@@ -155,10 +191,11 @@ namespace Less3.Hierarchy
         /// <summary>
         /// Delete the node, and all its children. Very destructive! Make sure to warn the user before calling this.
         /// </summary>
-        public static void DeleteNode(this L3Hierarchy Hierarchy, L3HierarchyNode node)
+        public static void DeleteNodeAction(this L3Hierarchy Hierarchy, L3HierarchyNode node)
         {
-            RecordUndoIfAsset(Hierarchy, "Delete Node");
+            RecordFullUndoIfAsset(Hierarchy, "Delete Node");
             DeleteNodeRecursive(Hierarchy, node);
+            SetDirtyIfAsset(Hierarchy);
             SaveObjectIfAsset(Hierarchy);
         }
 
@@ -175,10 +212,10 @@ namespace Less3.Hierarchy
             if (node.parent != null)
             {
                 RecordUndoIfAsset(node.parent, "Delete Node");
+                // Remove from parent
+                node.RemoveParent();
+                SetDirtyIfAsset(node.parent);
             }
-
-            // Remove from parent
-            node.RemoveParent();
 
             // Remove all children
             foreach (var child in node.children.ToArray())
@@ -188,19 +225,63 @@ namespace Less3.Hierarchy
 
 #if UNITY_EDITOR
             // Destroy the object
-            if (AssetDatabase.Contains(node))
-            {
-                Undo.DestroyObjectImmediate(node);
-            }
-            else
-            {
-                ScriptableObject.DestroyImmediate(node);
-            }
+            ScriptableObject.DestroyImmediate(node, true);
 #else
             ScriptableObject.Destroy(node);
 #endif
 
             Hierarchy.nodes.Remove(node);
+        }
+
+        public static L3HierarchyNode DuplicateNodeAction(this L3Hierarchy Hierarchy, L3HierarchyNode node)
+        {
+            if (Hierarchy == null || node == null)
+                return null;
+
+            RecordFullUndoIfAsset(Hierarchy, L3HierarchyUndoManager.DUPLICATE_KEY);
+
+            var newNode = Object.Instantiate(node);
+
+            newNode.name = node.name + " Copy";
+            newNode.children = new List<L3HierarchyNode>();
+            if (node.parent != null)
+            {
+                newNode.SetParent(node.parent);
+                SetDirtyIfAsset(node.parent);
+            }
+            Hierarchy.nodes.Add(newNode);
+            AddAsSubObjectIfAsset(newNode, Hierarchy);
+
+            // Duplicate children
+            foreach (var child in node.children)
+            {
+                DuplicateNodeRecursive(Hierarchy, child, newNode);
+            }
+
+            SetDirtyIfAsset(Hierarchy);
+            SaveObjectIfAsset(Hierarchy);
+            return newNode;
+        }
+
+        private static void DuplicateNodeRecursive(L3Hierarchy Hierarchy, L3HierarchyNode node, L3HierarchyNode newParent)
+        {
+            if (Hierarchy == null || node == null || newParent == null)
+                return;
+
+            var newNode = Object.Instantiate(node);
+            newNode.name = node.name + " Copy";
+            newNode.children = new List<L3HierarchyNode>();
+            Hierarchy.nodes.Add(newNode);
+            AddAsSubObjectIfAsset(newNode, Hierarchy);
+
+            // Set parent
+            newNode.SetParent(newParent);
+
+            // Duplicate children
+            foreach (var child in node.children)
+            {
+                DuplicateNodeRecursive(Hierarchy, child, newNode);
+            }
         }
 
         // * ----------------------------------------------------------------------------------------
@@ -275,6 +356,21 @@ namespace Less3.Hierarchy
             if (AssetDatabase.Contains(obj))
             {
                 Undo.RecordObject(obj, actionName);
+            }
+#endif
+        }
+
+        private static void RecordFullUndoIfAsset(L3Hierarchy obj, string actionName)
+        {
+            if (obj == null)
+                return;
+
+#if UNITY_EDITOR
+            if (AssetDatabase.Contains(obj))
+            {
+                var all = obj.nodes.ToList<Object>();
+                all.Add(obj);
+                Undo.RegisterCompleteObjectUndo(all.ToArray(), actionName);
             }
 #endif
         }

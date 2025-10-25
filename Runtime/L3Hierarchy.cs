@@ -9,9 +9,30 @@ namespace Less3.Hierarchy
         [SerializeField, HideInInspector]
         private int serializedVersion = 1;// For future use (maybe)
 
-        [HideInInspector]
         public List<L3HierarchyNode> nodes = new List<L3HierarchyNode>();
         public Action OnTreeRefreshRequired_EDITOR;
+
+        private void OnValidate()
+        {
+            // remove any subassets that are node in nodes.
+            // ? If you undo a deletion. Then redo it (in the undo window) the subasset never gets re-removed.
+            //   This seems like easist fix without adding complex undo tracking.
+#if UNITY_EDITOR
+            var allSubAssets = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(UnityEditor.AssetDatabase.GetAssetPath(this));
+            foreach (var subAsset in allSubAssets)
+            {
+                if (subAsset is L3HierarchyNode node)
+                {
+                    if (!nodes.Contains(node))
+                    {
+                        UnityEditor.AssetDatabase.RemoveObjectFromAsset(node);
+                        UnityEditor.EditorUtility.SetDirty(this);
+                        UnityEditor.AssetDatabase.SaveAssetIfDirty(this);
+                    }
+                }
+            }
+#endif
+        }
 
         protected virtual bool CustomParentActionValidation(L3HierarchyNode node, L3HierarchyNode newParent)
         {

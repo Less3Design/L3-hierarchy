@@ -165,9 +165,10 @@ namespace Less3.Hierarchy.Editor
                     Debug.LogError("Already contains element for node index " + i);
                 }
 
-                // add a right click context menu to the element
+                //* add a right click context menu to the element
                 element.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
                 {
+                    evt.menu.ClearItems();// children separators somehow (sometimes) pile up here unless we clear???
                     evt.menu.AppendAction("Add node as Child", (a) =>
                     {
                         L3TypeTreeWindow.OpenForType(item.Hierarchy.GetType(), element.worldTransform.GetPosition(), (type) =>
@@ -177,12 +178,19 @@ namespace Less3.Hierarchy.Editor
                             ForceSelectNode(newNode);
                         });
                     });
+                    evt.menu.AppendSeparator();
+                    evt.menu.AppendAction("Duplicate Node", (a) =>
+                    {
+                        var newNode =item.Hierarchy.DuplicateNodeAction(item);
+                        RefreshTreeView();
+                        ForceSelectNode(newNode);
+                    });
                     evt.menu.AppendAction("Delete Node", (a) =>
                     {
                         // warning dialogue
                         if (EditorUtility.DisplayDialog("Delete Node?", "This will delete the node and all its children. Are you sure?", "Delete", "Cancel"))
                         {
-                            item.Hierarchy.DeleteNode(item);
+                            item.Hierarchy.DeleteNodeAction(item);
                             RefreshTreeView();
                         }
                     });
@@ -407,6 +415,8 @@ namespace Less3.Hierarchy.Editor
 
         private void ForceSelectNode(L3HierarchyNode node)
         {
+            if (node == null)
+                return;
             List<int> indices = new List<int>();
             foreach (var kvp in nodeElements)
             {
