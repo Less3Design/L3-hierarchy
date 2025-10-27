@@ -63,10 +63,10 @@
     border-bottom-right-radius: 9px;
     border-bottom-left-radius: 9px;
     overflow: hidden;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
     border-top-color: var(--unity-colors-toolbar-border);
     border-left-color: var(--unity-colors-toolbar-border);
     border-bottom-color: var(--unity-colors-toolbar-border);
