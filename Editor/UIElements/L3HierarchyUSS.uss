@@ -82,7 +82,6 @@
 
 .ElementAlternateBackground {
     background-color: var(--unity-colors-default-background);
-    border-bottom-width: 1px;
     border-bottom-color: rgba(0, 0, 0, 0.15);
     border-top-width: 1px;
     border-left-color: rgba(0, 0, 0, 0.15);
