@@ -12,9 +12,12 @@ namespace Less3.Hierarchy
 {
 #if UNITY_EDITOR
     [InitializeOnLoad]
+#endif
     public static class L3HierarchyUndoManager
     {
         public static string DUPLICATE_KEY = "Duplicate Node (L3Hierarchy)";
+
+#if UNITY_EDITOR
         static L3HierarchyUndoManager()
         {
             Undo.undoRedoEvent += OnEvent;
@@ -39,8 +42,8 @@ namespace Less3.Hierarchy
             // Destroy it immediately—still clears redo
             Object.DestroyImmediate(temp, true);
         }
-    }
 #endif
+    }
 
     /// <summary>
     /// Holds all the methods like "add node" and "set parent" for manipulating heirarchies and nodes.
