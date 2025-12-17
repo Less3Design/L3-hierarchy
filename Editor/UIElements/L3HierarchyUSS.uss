@@ -23,10 +23,26 @@
 }
 
 .ElementContainer {
-    padding-top: 2px;
-    padding-right: 3px;
-    padding-bottom: 2px;
-    padding-left: 3px;
+    padding-top: 3px;
+    padding-right: 6px;
+    padding-bottom: 3px;
+    padding-left: 9px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 10px;
+    background-color: var(--unity-colors-window-background);
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 1px;
+}
+
+.ElementContainer:selected {
+    background-color: rgb(205, 2, 169);
+}
+
+.ElementContainer:hover {
+    background-color: var(--unity-colors-app_toolbar_button-background-hover);
 }
 
 .ElementTitle {
@@ -90,7 +106,8 @@
 }
 
 .ElementAlternateBackground:selected {
-    background-color: var(--unity-colors-highlight-background);
+    background-image: url("project://database/Assets/L3-heirachy/Editor/Gradients/1to0_512.png?fileID=2800000&guid=2ed055fe0676a1d44acb6664de223fc8&type=3#1to0_512");
+    -unity-background-image-tint-color: var(--unity-colors-highlight-background);
 }
 
 .ElementAlternateBackground:hover {
@@ -99,4 +116,15 @@
 
 .ElementAlternateBackground:selected:hover {
     background-color: var(--unity-colors-highlight-background);
+}
+
+.ElementBackground {
+    background-color: rgb(35, 35, 35);
+}
+
+.ElementBackground:selected {
+    background-image: url("project://database/Assets/L3-heirachy/Editor/Gradients/1to0_512.png?fileID=2800000&guid=2ed055fe0676a1d44acb6664de223fc8&type=3#1to0_512");
+    -unity-background-image-tint-color: var(--unity-colors-input_field-border-focus);
+    border-right-color: var(--unity-colors-input_field-border-focus);
+    border-right-width: 1px;
 }

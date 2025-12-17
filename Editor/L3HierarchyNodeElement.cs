@@ -24,6 +24,7 @@ namespace Less3.Hierarchy.Editor
             icon = root.Q<VisualElement>("Icon");
             title = root.Q<Label>("Title");
             subTitle = root.Q<Label>("SubTitle");
+            root.parent.parent.AddToClassList("ElementBackground");
             UpdateContent();
         }
 
@@ -77,7 +78,8 @@ namespace Less3.Hierarchy.Editor
             {
                 root.style.opacity = 1f;
             }
-
+            
+            /*
             if (node is IHierarchyAlternateBackground alternateBackgroundNode)
             {
                 if (alternateBackgroundNode.UseAlternateBackground)
@@ -93,6 +95,7 @@ namespace Less3.Hierarchy.Editor
             {
                 root.parent.parent.RemoveFromClassList("ElementAlternateBackground");
             }
+            */
         }
     }
 }
