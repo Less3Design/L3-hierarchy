@@ -78,6 +78,7 @@ namespace Less3.Hierarchy.Editor
                     }
                 }
 
+                /*
                 if (rootContainer != null)
                 {
                     if (rootContainer.resolvedStyle.width > 800)
@@ -89,6 +90,7 @@ namespace Less3.Hierarchy.Editor
                         rootContainer.style.flexDirection = FlexDirection.Column;
                     }
                 }
+                */
             }
         }
 
