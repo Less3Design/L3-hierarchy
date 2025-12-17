@@ -51,9 +51,9 @@ MonoBehaviour:
   children:
   - {fileID: -7396700270609634370}
   _Hierarchy: {fileID: 11400000}
-  title: 
-  subTitle: 
-  icon: {fileID: 0}
+  title: asdfasdfasdf
+  subTitle: asdfasdfasdfsdzfaf
+  icon: {fileID: 8881787222340032348, guid: 0000000000000000d000000000000000, type: 0}
   disable: 0
   alternate: 0
 --- !u!114 &-1024354495665039639
@@ -141,7 +141,7 @@ MonoBehaviour:
   title: 
   subTitle: 
   icon: {fileID: 0}
-  disable: 0
+  disable: 1
   alternate: 0
 --- !u!114 &8564628368100467936
 MonoBehaviour:

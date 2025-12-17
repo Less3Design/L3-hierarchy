@@ -19,11 +19,7 @@ namespace Less3.Hierarchy.Editor
 
         private TreeView treeView;
         private VisualElement rootContainer;
-        private VisualElement inspectorContainer;
-        private VisualElement inspectorRoot;
 
-        private Label selectedTypeName;
-        private Label selectedObjName;
         private int lastEventFrame = -1;
 
         private Dictionary<int, L3HierarchyNodeElement> nodeElements = new Dictionary<int, L3HierarchyNodeElement>();
@@ -111,11 +107,6 @@ namespace Less3.Hierarchy.Editor
             root.Q<Label>("TypeName").text = Hierarchy.GetType().Name;
             root.Q<Label>("ObjName").text = Hierarchy.name;
 
-            inspectorContainer = root.Q("InspectorContainer");
-            inspectorRoot = root.Q("InspectorRoot");
-            selectedTypeName = root.Q<Label>("SelectedType");
-            selectedObjName = root.Q<Label>("SelectedName");
-
             // heirarchy type open
             root.Q<Label>("TypeName").AddManipulator(new Clickable(() =>
             {
@@ -125,32 +116,6 @@ namespace Less3.Hierarchy.Editor
                 var m_script = so.FindProperty("m_Script").objectReferenceValue;
                 AssetDatabase.OpenAsset(m_script);
             }));
-
-            // selected obj type open
-            selectedTypeName.AddManipulator(new Clickable(() =>
-            {
-                //open the object type script in script editor
-                //get the m_script
-                List<L3HierarchyNode> selectedNodes = new List<L3HierarchyNode>();
-                foreach (int index in treeView.selectedIndices)
-                {
-                    var node = treeView.GetItemDataForIndex<L3HierarchyNode>(index);
-                    selectedNodes.Add(node);
-                }
-
-                if (selectedNodes.Count > 0)
-                {
-                    //if all types are the same
-                    if (selectedNodes.All(n => n.GetType() == selectedNodes[0].GetType()))
-                    {
-                        var so = new SerializedObject(selectedNodes[0]);
-                        var m_script = so.FindProperty("m_Script").objectReferenceValue;
-                        AssetDatabase.OpenAsset(m_script);
-                    }
-                }
-            }));
-
-
 
             treeView = root.Q<TreeView>("TreeView");
             treeView.makeItem = () => m_element_VisualTreeAsset.CloneTree();
@@ -324,31 +289,6 @@ namespace Less3.Hierarchy.Editor
                 });
             };
 
-            var addChildButton = root.Q<ToolbarButton>("AddChildNodeButton"); ;
-            addChildButton.clicked += () =>
-            {
-                List<L3HierarchyNode> selectedNodes = new List<L3HierarchyNode>();
-                foreach (int index in treeView.selectedIndices)
-                {
-                    var node = treeView.GetItemDataForIndex<L3HierarchyNode>(index);
-                    selectedNodes.Add(node);
-                }
-
-                if (selectedNodes.Count == 1)
-                {
-                    L3TypeTreeWindow.OpenForType(target.GetType(), addChildButton.worldTransform.GetPosition(), (type) =>
-                    {
-                        var newNode = target.CreateNode(type, selectedNodes[0]);
-                        RefreshTreeView();
-                        ForceSelectNode(newNode);
-                    });
-                }
-                else
-                {
-                    EditorUtility.DisplayDialog("Select One Parent Node", "Please select a single parent node to add a child to.", "OK");
-                }
-            };
-
             treeView.SetRootItems(BuildTreeView());
             treeView.autoExpand = true;
             treeView.Rebuild();
@@ -368,56 +308,9 @@ namespace Less3.Hierarchy.Editor
 
         private void UpdateSelction(List<L3HierarchyNode> node)
         {
-            inspectorContainer.Clear();
-
-            if (node.Count == 0)
+            if (node.Count > 0)
             {
-                inspectorRoot.style.display = DisplayStyle.None;
-                return;
-            }
-            else
-            {
-                inspectorRoot.style.display = DisplayStyle.Flex;
-            }
-
-            //check if they are all the same type
-            for (int i = 1; i < node.Count; i++)
-            {
-                if (node[i].GetType() != node[0].GetType())
-                {
-                    // they are not the same type
-                    selectedTypeName.text = "---";
-                    selectedObjName.text = "";
-                    var label = new Label("Multiple Different Types Selected");
-                    label.style.paddingBottom = 16;
-                    label.style.paddingTop = 16;
-                    label.style.paddingLeft = 16;
-                    label.style.paddingRight = 16;
-
-                    inspectorContainer.Add(label);
-                    return;
-                }
-            }
-
-            // create a serialized object of the array
-            var serializedObject = new SerializedObject(node.ToArray());
-            inspectorContainer.Add(new InspectorElement(serializedObject));
-
-            selectedTypeName.text = node[0].GetType().Name;
-            if (node.Count == 1)
-            {
-                if (node[0] is IHierarchyNodeTitle customTitle)
-                {
-                    selectedObjName.text = customTitle.NodeTitle;
-                }
-                else
-                {
-                    selectedObjName.text = node[0].name;
-                }
-            }
-            else
-            {
-                selectedObjName.text = $"{node.Count} Nodes Selected";
+                Selection.objects = node.ToArray();
             }
         }
 

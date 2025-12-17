@@ -1,25 +1,15 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/L3-heirachy/Editor/UIElements/L3HierarchyUSS.uss?fileID=7433441132597879392&amp;guid=176d3fc2021c6f7468a989dc907905b9&amp;type=3#L3HierarchyUSS" />
-    <engine:VisualElement name="RootContainer" class="RootContainer" style="flex-grow: 1; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; flex-direction: row; align-items: flex-start;">
+    <engine:VisualElement name="RootContainer" class="RootContainer" style="flex-grow: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row; align-items: stretch;">
         <engine:VisualElement name="L3" style="flex-grow: 1; width: 24px; height: 24px; position: absolute; background-image: url(&quot;project://database/Assets/L3-heirachy/Editor/Icons/Less3Icon48px.png?fileID=2800000&amp;guid=df3d06e70133cbd4b84ae5221286a055&amp;type=3#Less3Icon48px&quot;); opacity: 0.05; left: 8px; bottom: 7px;" />
-        <engine:VisualElement name="TreePanel" class="RoundedPanel" style="flex-grow: 1;">
+        <engine:VisualElement name="TreePanel" style="flex-grow: 1; flex-shrink: 0;">
             <editor:Toolbar style="height: 24px; border-bottom-width: 2px;">
                 <engine:Label text="TypeName" name="TypeName" class="HeirarchyTypeName" style="padding-right: 8px; padding-left: 8px; color: rgb(127, 214, 253);" />
                 <engine:Label text="TypeName" name="ObjName" class="HierarchyObjName HeirarchyTypeName" style="padding-right: 8px; padding-left: 8px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; flex-shrink: 1; text-overflow: ellipsis; overflow: hidden;" />
                 <editor:ToolbarSpacer style="flex-grow: 1;" />
                 <editor:ToolbarButton text="+ Add Node" focusable="false" name="AddNodeButton" style="border-left-width: 1px; padding-right: 8px; padding-left: 8px; border-right-width: 0; flex-shrink: 0;" />
             </editor:Toolbar>
-            <engine:TreeView name="TreeView" auto-expand="true" reorderable="true" selection-type="Multiple" virtualization-method="DynamicHeight" show-border="false" show-alternating-row-backgrounds="None" style="flex-shrink: 1; flex-grow: 0; flex-basis: auto;" />
+            <engine:TreeView name="TreeView" auto-expand="true" reorderable="true" selection-type="Multiple" virtualization-method="DynamicHeight" show-border="false" show-alternating-row-backgrounds="None" style="flex-shrink: 1; flex-grow: 1; flex-basis: auto; background-color: rgb(35, 35, 35);" />
         </engine:VisualElement>
-        <engine:VisualElement name="Separator" class="Separator" style="min-width: 6px;" />
-        <engine:ScrollView name="InspectorRoot" class="RoundedPanel" style="flex-grow: 1;">
-            <editor:Toolbar style="height: 24px; border-bottom-width: 2px;">
-                <engine:Label text="TypeName" name="SelectedType" class="HeirarchyTypeName" style="padding-right: 8px; padding-left: 8px; color: rgb(127, 253, 165);" />
-                <engine:Label text="TypeName" name="SelectedName" class="HierarchyObjName HeirarchyTypeName" style="padding-right: 8px; padding-left: 8px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; flex-shrink: 1; text-overflow: ellipsis; overflow: hidden;" />
-                <editor:ToolbarSpacer style="flex-grow: 1;" />
-                <editor:ToolbarButton text="+ Add Child" focusable="false" name="AddChildNodeButton" style="border-left-width: 1px; padding-right: 8px; padding-left: 8px; border-right-width: 0; flex-shrink: 0;" />
-            </editor:Toolbar>
-            <engine:VisualElement name="InspectorContainer" class="ContentBackground" style="flex-grow: 0; padding-bottom: 4px; padding-top: 2px;" />
-        </engine:ScrollView>
     </engine:VisualElement>
 </engine:UXML>
