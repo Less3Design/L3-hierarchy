@@ -96,26 +96,12 @@
     border-right-color: var(--unity-colors-toolbar-border);
 }
 
-.ElementAlternateBackground {
-    background-color: var(--unity-colors-default-background);
-    border-bottom-color: rgba(0, 0, 0, 0.15);
-    border-top-width: 1px;
-    border-left-color: rgba(0, 0, 0, 0.15);
-    border-right-color: rgba(0, 0, 0, 0.15);
-    border-top-color: rgba(0, 0, 0, 0.15);
+.ElementBackgroundAlternate {
+    background-color: rgb(35, 35, 35);
 }
 
-.ElementAlternateBackground:selected {
-    background-image: url("project://database/Assets/L3-heirachy/Editor/Gradients/1to0_512.png?fileID=2800000&guid=2ed055fe0676a1d44acb6664de223fc8&type=3#1to0_512");
-    -unity-background-image-tint-color: var(--unity-colors-highlight-background);
-}
-
-.ElementAlternateBackground:hover {
-    background-color: var(--unity-colors-app_toolbar-background);
-}
-
-.ElementAlternateBackground:selected:hover {
-    background-color: var(--unity-colors-highlight-background);
+.ElementBackgroundAlternate:hover {
+    background-color: rgb(43, 43, 43);
 }
 
 .ElementBackground {

@@ -12,6 +12,7 @@ namespace Less3.Hierarchy.Editor
         public L3HierarchyNode node;
 
         public VisualElement root;
+        public VisualElement container;
         public VisualElement icon;
         public Label title;
         public Label subTitle;
@@ -21,6 +22,7 @@ namespace Less3.Hierarchy.Editor
             this.root = root;
             this.node = node;
 
+            container = root.Q<VisualElement>("Container");
             icon = root.Q<VisualElement>("Icon");
             title = root.Q<Label>("Title");
             subTitle = root.Q<Label>("SubTitle");
@@ -79,23 +81,21 @@ namespace Less3.Hierarchy.Editor
                 root.style.opacity = 1f;
             }
             
-            /*
             if (node is IHierarchyAlternateBackground alternateBackgroundNode)
             {
                 if (alternateBackgroundNode.UseAlternateBackground)
                 {
-                    root.parent.parent.AddToClassList("ElementAlternateBackground");
+                    container.AddToClassList("ElementBackgroundAlternate");
                 }
                 else
                 {
-                    root.parent.parent.RemoveFromClassList("ElementAlternateBackground");
+                    container.RemoveFromClassList("ElementBackgroundAlternate");
                 }
             }
             else
             {
-                root.parent.parent.RemoveFromClassList("ElementAlternateBackground");
+                container.RemoveFromClassList("ElementBackgroundAlternate");
             }
-            */
         }
     }
 }
