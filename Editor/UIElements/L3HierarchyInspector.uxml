@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/L3-heirachy/Editor/UIElements/L3HierarchyUSS.uss?fileID=7433441132597879392&amp;guid=176d3fc2021c6f7468a989dc907905b9&amp;type=3#L3HierarchyUSS" />
     <engine:VisualElement name="RootContainer" class="RootContainer" style="flex-grow: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row; align-items: stretch;">
         <engine:VisualElement name="L3" style="flex-grow: 1; width: 24px; height: 24px; position: absolute; background-image: url(&quot;project://database/Assets/L3-heirachy/Editor/Icons/Less3Icon48px.png?fileID=2800000&amp;guid=df3d06e70133cbd4b84ae5221286a055&amp;type=3#Less3Icon48px&quot;); opacity: 0.05; left: 8px; bottom: 7px;" />
-        <engine:VisualElement name="TreePanel" style="flex-grow: 1; flex-shrink: 0;">
+        <engine:VisualElement name="TreePanel" style="flex-grow: 1; flex-shrink: 1;">
             <editor:Toolbar style="height: 24px; border-bottom-width: 2px;">
                 <engine:Label text="TypeName" name="TypeName" class="HeirarchyTypeName" style="padding-right: 8px; padding-left: 8px; color: rgb(127, 214, 253);" />
                 <engine:Label text="TypeName" name="ObjName" class="HierarchyObjName HeirarchyTypeName" style="padding-right: 8px; padding-left: 8px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; flex-shrink: 1; text-overflow: ellipsis; overflow: hidden;" />

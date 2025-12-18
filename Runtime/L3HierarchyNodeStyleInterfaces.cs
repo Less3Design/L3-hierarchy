@@ -22,4 +22,8 @@ namespace Less3.Hierarchy
     {
         bool UseAlternateBackground { get; }
     }
+    public interface IHierarchyEdgeText
+    {
+        string EdgeText { get; }
+    }
 }

@@ -6,8 +6,10 @@ using UnityEngine;
 namespace Less3.Hierarchy
 {
     [TypeTreeMenu(typeof(ExHierarchy), "Example/ExNode")]
-    public class ExNode : L3HierarchyNode, IHierarchyNodeSubTitle, IHierarchyNodeIcon, IHierarchyNodeTitle, IHierarchyNodeOpacity, IHierarchyAlternateBackground
+    public class ExNode : L3HierarchyNode, IHierarchyNodeSubTitle, IHierarchyNodeIcon, IHierarchyNodeTitle, IHierarchyNodeOpacity, IHierarchyAlternateBackground, IHierarchyEdgeText
     {
+        public string edgeText;
+        public string EdgeText => edgeText;
         public string title;
         public string NodeTitle => string.IsNullOrEmpty(title) ? name : title;
         public string subTitle;

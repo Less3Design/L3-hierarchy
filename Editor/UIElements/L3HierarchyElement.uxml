@@ -1,10 +1,11 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/L3-heirachy/Editor/UIElements/L3HierarchyUSS.uss?fileID=7433441132597879392&amp;guid=176d3fc2021c6f7468a989dc907905b9&amp;type=3#L3HierarchyUSS" />
-    <engine:VisualElement name="Container" class="ElementContainer" style="flex-grow: 1; flex-direction: row; align-items: center;">
+    <engine:VisualElement name="Container" class="ElementContainer" style="flex-grow: 0; flex-direction: row; align-items: center; flex-shrink: 1;">
         <engine:VisualElement name="Icon" class="ElementIcon" style="background-image: url(&quot;project://database/Assets/L3-heirachy/Editor/Icons/icon_h_cube.png?fileID=2800000&amp;guid=597b01dfeea209a4a9984d3bce145135&amp;type=3#icon_h_cube&quot;);" />
-        <engine:VisualElement name="TextContainer" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-items: flex-start;">
-            <engine:Label text="Label" name="SubTitle" class="ElementSubTitle" style="margin-bottom: -2px;" />
-            <engine:Label text="Label" name="Title" class="ElementTitle" style="font-size: 12px;" />
+        <engine:VisualElement name="TextContainer" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; align-items: center; flex-shrink: 1;">
+            <engine:Label text="Label" name="Title" class="ElementTitle" style="font-size: 12px; margin-right: 4px;" />
+            <engine:Label text="Label" name="SubTitle" class="ElementSubTitle" style="margin-bottom: -2px; margin-left: 0; flex-shrink: 1; text-overflow: ellipsis; overflow: hidden;" />
         </engine:VisualElement>
+        <engine:Label text="Label" name="Edge" style="-unity-text-align: middle-left; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; opacity: 0.7;" />
     </engine:VisualElement>
 </engine:UXML>

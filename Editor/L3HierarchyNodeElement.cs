@@ -16,6 +16,7 @@ namespace Less3.Hierarchy.Editor
         public VisualElement icon;
         public Label title;
         public Label subTitle;
+        public Label edgeText;
 
         public L3HierarchyNodeElement(VisualElement root, L3HierarchyNode node)
         {
@@ -26,6 +27,7 @@ namespace Less3.Hierarchy.Editor
             icon = root.Q<VisualElement>("Icon");
             title = root.Q<Label>("Title");
             subTitle = root.Q<Label>("SubTitle");
+            edgeText = root.Q<Label>("Edge");
             root.parent.parent.AddToClassList("ElementBackground");
             UpdateContent();
         }
@@ -58,6 +60,24 @@ namespace Less3.Hierarchy.Editor
             else
             {
                 subTitle.style.display = DisplayStyle.None;
+            }
+
+            // * Edge Text
+            if (node is IHierarchyEdgeText edgeTextNode)
+            {
+                if (string.IsNullOrEmpty(edgeTextNode.EdgeText))
+                {
+                    edgeText.style.display = DisplayStyle.None;
+                }
+                else
+                {
+                    edgeText.style.display = DisplayStyle.Flex;
+                    edgeText.text = edgeTextNode.EdgeText;
+                }
+            }
+            else
+            {
+                edgeText.style.display = DisplayStyle.None;
             }
 
             // * Icon
