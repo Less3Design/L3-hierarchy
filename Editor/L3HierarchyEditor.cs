@@ -109,14 +109,7 @@ namespace Less3.Hierarchy.Editor
             {
                 var item = treeView.GetItemDataForIndex<IHierarchyNodeElement>(i);
 
-                if (!nodeElements.ContainsKey(i))
-                {
-                    nodeElements[i] = new L3HierarchyNodeElement(element, item);
-                }
-                else
-                {
-                    Debug.LogError("Already contains element for node index " + i);
-                }
+                nodeElements[i] = new L3HierarchyNodeElement(element, item);
 
                 bool enable = item is L3HierarchyNode;
                 element.parent.parent.SetEnabled(enable);
