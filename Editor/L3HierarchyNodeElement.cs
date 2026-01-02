@@ -9,7 +9,7 @@ namespace Less3.Hierarchy.Editor
     /// </summary>
     public class L3HierarchyNodeElement
     {
-        public L3HierarchyNode node;
+        public IHierarchyNodeElement node;
 
         public VisualElement root;
         public VisualElement container;
@@ -18,7 +18,7 @@ namespace Less3.Hierarchy.Editor
         public Label subTitle;
         public Label edgeText;
 
-        public L3HierarchyNodeElement(VisualElement root, L3HierarchyNode node)
+        public L3HierarchyNodeElement(VisualElement root, IHierarchyNodeElement node)
         {
             this.root = root;
             this.node = node;
@@ -41,7 +41,7 @@ namespace Less3.Hierarchy.Editor
             }
             else
             {
-                title.text = node.name;
+                title.text = node.NodeName;
             }
 
             // * Subtitle

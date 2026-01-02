@@ -73,20 +73,6 @@ namespace Less3.Hierarchy.Editor
                         nodeElements[i].UpdateContent();
                     }
                 }
-
-                /*
-                if (rootContainer != null)
-                {
-                    if (rootContainer.resolvedStyle.width > 800)
-                    {
-                        rootContainer.style.flexDirection = FlexDirection.Row;
-                    }
-                    else
-                    {
-                        rootContainer.style.flexDirection = FlexDirection.Column;
-                    }
-                }
-                */
             }
         }
 
@@ -121,9 +107,9 @@ namespace Less3.Hierarchy.Editor
             treeView.makeItem = () => m_element_VisualTreeAsset.CloneTree();
             treeView.bindItem = (element, i) =>
             {
-                var item = treeView.GetItemDataForIndex<L3HierarchyNode>(i);
+                var item = treeView.GetItemDataForIndex<IHierarchyNodeElement>(i);
 
-                if (!nodeElements.ContainsKey(item.GetInstanceID()))
+                if (!nodeElements.ContainsKey(i))
                 {
                     nodeElements[i] = new L3HierarchyNodeElement(element, item);
                 }
@@ -132,41 +118,49 @@ namespace Less3.Hierarchy.Editor
                     Debug.LogError("Already contains element for node index " + i);
                 }
 
+                bool enable = item is L3HierarchyNode;
+                element.parent.parent.SetEnabled(enable);
+
                 //* add a right click context menu to the element
                 element.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
                 {
                     evt.menu.ClearItems();// children separators somehow (sometimes) pile up here unless we clear???
+
+                    bool anyNonObjectsSelected = treeView.selectedIndices.Any(i => treeView.GetItemDataForIndex<IHierarchyNodeElement>(i) is not L3HierarchyNode);
 
                     if (treeView.selectedIndices.Count() > 1)
                     {
                         evt.menu.AppendAction($"{treeView.selectedIndices.Count()} Nodes Selected", (e) => { }, DropdownMenuAction.Status.Disabled);
                         return;
                     }
-                    evt.menu.AppendAction("Add Child", (a) =>
+                    if (!anyNonObjectsSelected)
                     {
-                        L3TypeTreeWindow.OpenForType(item.Hierarchy.GetType(), element.worldTransform.GetPosition(), (type) =>
+                        evt.menu.AppendAction("Add Child", (a) =>
                         {
-                            var newNode = item.Hierarchy.CreateNode(type, item);
+                            L3TypeTreeWindow.OpenForType(item.Hierarchy.GetType(), element.worldTransform.GetPosition(), (type) =>
+                            {
+                                var newNode = item.Hierarchy.CreateNode(type, item as L3HierarchyNode);
+                                RefreshTreeView();
+                                ForceSelectNode(newNode);
+                            });
+                        });
+                        evt.menu.AppendSeparator();
+                        evt.menu.AppendAction("Duplicate Node", (a) =>
+                        {
+                            var newNode = item.Hierarchy.DuplicateNodeAction(item);
                             RefreshTreeView();
                             ForceSelectNode(newNode);
                         });
-                    });
-                    evt.menu.AppendSeparator();
-                    evt.menu.AppendAction("Duplicate Node", (a) =>
-                    {
-                        var newNode = item.Hierarchy.DuplicateNodeAction(item);
-                        RefreshTreeView();
-                        ForceSelectNode(newNode);
-                    });
-                    evt.menu.AppendAction("Delete Node", (a) =>
-                    {
-                        // warning dialogue
-                        if (EditorUtility.DisplayDialog("Delete Node?", "This will delete the node and all its children. Are you sure?", "Delete", "Cancel"))
+                        evt.menu.AppendAction("Delete Node", (a) =>
                         {
-                            item.Hierarchy.DeleteNodeAction(item);
-                            RefreshTreeView();
-                        }
-                    });
+                            // warning dialogue
+                            if (EditorUtility.DisplayDialog("Delete Node?", "This will delete the node and all its children. Are you sure?", "Delete", "Cancel"))
+                            {
+                                item.Hierarchy.DeleteNodeAction(item);
+                                RefreshTreeView();
+                            }
+                        });
+                    }
                     evt.StopPropagation();
                 }));
             };
@@ -189,15 +183,18 @@ namespace Less3.Hierarchy.Editor
                 // index relative to new parent
                 int siblingIndex = destinationIndex - parentIndex - 1;
 
-                var nodeMoved = treeView.GetItemDataForId<L3HierarchyNode>(idFrom);
-                var newParent = treeView.GetItemDataForId<L3HierarchyNode>(idTo);
+                var nodeMoved = treeView.GetItemDataForId<IHierarchyNodeElement>(idFrom);
+                var newParent = treeView.GetItemDataForId<IHierarchyNodeElement>(idTo);
 
                 List<L3HierarchyNode> nodesToMove = new List<L3HierarchyNode>();
                 List<int> orderedIndexes = treeView.selectedIndices.OrderByDescending(i => i).ToList();
                 foreach (int index in orderedIndexes)
                 {
-                    var child = treeView.GetItemDataForIndex<L3HierarchyNode>(index);
-                    nodesToMove.Add(child);
+                    var child = treeView.GetItemDataForIndex<IHierarchyNodeElement>(index);
+                    if (child is L3HierarchyNode node)// injected nodes can not be moved.
+                    {
+                        nodesToMove.Add(node);
+                    }
                 }
 
                 int i = 0;
@@ -233,13 +230,13 @@ namespace Less3.Hierarchy.Editor
                     }
                 }
                 // * Set nodes as children to some node
-                else
+                else if (newParent is L3HierarchyNode parentNode)
                 {
                     foreach (var n in nodesToMove)
                     {
-                        if (n.Hierarchy.ValidateParentAction(n, newParent))
+                        if (n.Hierarchy.ValidateParentAction(n, parentNode))
                         {
-                            n.SetParentAction(newParent, siblingIndex + i);
+                            n.SetParentAction(parentNode, siblingIndex + i);
                             i++;
                         }
                     }
@@ -314,14 +311,14 @@ namespace Less3.Hierarchy.Editor
             }
         }
 
-        private void ForceSelectNode(L3HierarchyNode node)
+        private void ForceSelectNode(IHierarchyNodeElement nodeElement)
         {
-            if (node == null)
+            if (nodeElement == null)
                 return;
             List<int> indices = new List<int>();
             foreach (var kvp in nodeElements)
             {
-                if (kvp.Value.node == node)
+                if (kvp.Value.node.GetHashCode() == nodeElement.GetHashCode())
                 {
                     indices.Add(kvp.Key);
                     break;
@@ -330,28 +327,45 @@ namespace Less3.Hierarchy.Editor
             treeView.SetSelection(indices);
         }
 
-        private List<TreeViewItemData<L3HierarchyNode>> BuildTreeView()
+        private List<TreeViewItemData<IHierarchyNodeElement>> BuildTreeView()
         {
-            List<TreeViewItemData<L3HierarchyNode>> tree = new List<TreeViewItemData<L3HierarchyNode>>();
+            List<TreeViewItemData<IHierarchyNodeElement>> tree = new List<TreeViewItemData<IHierarchyNodeElement>>();
 
-            foreach (var node in ((L3Hierarchy)target).nodes)
+            foreach (var nodeElement in ((L3Hierarchy)target).nodes)
             {
-                if (node.parent == null)
+                if (nodeElement.ParentElement == null)
                 {
-                    tree.Add(BuildTreeViewItem(node));
+                    tree.Add(BuildTreeViewItem(nodeElement));
                 }
             }
             return tree;
         }
 
-        private TreeViewItemData<L3HierarchyNode> BuildTreeViewItem(L3HierarchyNode node)
+        private TreeViewItemData<IHierarchyNodeElement> BuildTreeViewItem(IHierarchyNodeElement nodeElement)
         {
-            var children = new List<TreeViewItemData<L3HierarchyNode>>();
-            foreach (var child in node.children)
+            var children = new List<TreeViewItemData<IHierarchyNodeElement>>();
+            foreach (var child in nodeElement.ChildrenElements)
             {
                 children.Add(BuildTreeViewItem(child));
             }
-            return new TreeViewItemData<L3HierarchyNode>(node.GetInstanceID(), node, children);
+            return new TreeViewItemData<IHierarchyNodeElement>(nodeElement.GetHashCode(), nodeElement, children);
+        }
+
+        public static void MakeNotDraggable(VisualElement rowRoot)
+        {
+            // Prevent the row from starting drag interactions.
+            rowRoot.RegisterCallback<PointerDownEvent>(e =>
+            {
+                // If your codebase starts drags on PointerDown, stopping here prevents it.
+                e.StopImmediatePropagation();
+            }, TrickleDown.TrickleDown);
+
+            rowRoot.RegisterCallback<PointerMoveEvent>(e =>
+            {
+                // If drags are started on move threshold, block it too.
+                if ((e.pressedButtons & 1) != 0) // left button
+                    e.StopImmediatePropagation();
+            }, TrickleDown.TrickleDown);
         }
     }
 }

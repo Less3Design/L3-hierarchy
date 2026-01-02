@@ -1,9 +1,52 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Less3.Hierarchy
 {
-    public abstract class L3HierarchyNode : ScriptableObject
+    /// <summary>
+    /// Interface used by the editor.
+    /// </summary>
+    public interface IHierarchyNodeElement
+    {
+        string NodeName { get; }
+        IHierarchyNodeElement ParentElement { get; }
+        List<IHierarchyNodeElement> ChildrenElements { get; }
+        L3Hierarchy Hierarchy { get; }
+    }
+
+    /// <summary>
+    /// a "fake" node that you can inject into the hierarchy. Use when you have a "real" node, and you want
+    /// to display "generated children" or something like that.
+    /// </summary>
+    public class InjectedHierarchyNode : IHierarchyNodeElement
+    {
+        public string name;
+        public IHierarchyNodeElement parent;
+        public List<IHierarchyNodeElement> children;
+        public L3Hierarchy hierarchy;
+        private System.Guid _guid = System.Guid.NewGuid();
+
+        public string NodeName => name;
+        public IHierarchyNodeElement ParentElement => parent;
+        public List<IHierarchyNodeElement> ChildrenElements => children;
+        public L3Hierarchy Hierarchy => hierarchy;
+
+        public InjectedHierarchyNode(string name, IHierarchyNodeElement parent, L3Hierarchy hierarchy)
+        {
+            this.name = name;
+            this.parent = parent;
+            this.children = new List<IHierarchyNodeElement>();
+            this.hierarchy = hierarchy;
+        }
+
+        public override int GetHashCode()
+        {
+            return _guid.GetHashCode();
+        }
+    }
+
+    public abstract class L3HierarchyNode : ScriptableObject, IHierarchyNodeElement
     {
 #pragma warning disable 0414
         [SerializeField, HideInInspector]
@@ -21,6 +64,11 @@ namespace Less3.Hierarchy
         [SerializeField, HideInInspector]
         private L3Hierarchy _Hierarchy;
         public L3Hierarchy Hierarchy => _Hierarchy;
+
+        public string NodeName => name;
+        public IHierarchyNodeElement ParentElement => parent as IHierarchyNodeElement;
+        // The editor can display extra injected children elements.
+        public List<IHierarchyNodeElement> ChildrenElements => InjectChildren(children.Cast<IHierarchyNodeElement>().ToList());
 
         public int Index
         {
@@ -91,6 +139,11 @@ namespace Less3.Hierarchy
             }
 
             this._Hierarchy = Hierarchy;
+        }
+
+        public virtual List<IHierarchyNodeElement> InjectChildren(List<IHierarchyNodeElement> children)
+        {
+            return children;
         }
     }
 }

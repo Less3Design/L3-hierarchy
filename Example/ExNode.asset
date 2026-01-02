@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: ExNodeOther
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: -4801609507747610548}
+  parent: {fileID: 0}
   children:
   - {fileID: -1024354495665039639}
+  - {fileID: 1214819641227112489}
   _Hierarchy: {fileID: 11400000}
 --- !u!114 &-5200578130566944477
 MonoBehaviour:
@@ -31,8 +32,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedVersion: 1
   parent: {fileID: 0}
-  children:
-  - {fileID: 1285072936502401978}
+  children: []
   _Hierarchy: {fileID: 11400000}
 --- !u!114 &-4801609507747610548
 MonoBehaviour:
@@ -48,12 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedVersion: 1
   parent: {fileID: 0}
-  children:
-  - {fileID: -7396700270609634370}
+  children: []
   _Hierarchy: {fileID: 11400000}
+  edgeText: <color=red><b>3 Errors
   title: asdfasdfasdf
   subTitle: asdfasdfasdfsdzfaf
-  icon: {fileID: 8881787222340032348, guid: 0000000000000000d000000000000000, type: 0}
+  icon: {fileID: -4949026745241090963, guid: 0000000000000000d000000000000000, type: 0}
   disable: 0
   alternate: 0
 --- !u!114 &-1024354495665039639
@@ -70,11 +70,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedVersion: 1
   parent: {fileID: -7396700270609634370}
-  children:
-  - {fileID: 1214819641227112489}
+  children: []
   _Hierarchy: {fileID: 11400000}
+  edgeText: 
   title: 
-  subTitle: 
+  subTitle: Subtitle
   icon: {fileID: 0}
   disable: 0
   alternate: 1
@@ -92,12 +92,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedVersion: 1
   nodes:
+  - {fileID: 1285072936502401978}
   - {fileID: -5200578130566944477}
   - {fileID: -4801609507747610548}
   - {fileID: -7396700270609634370}
   - {fileID: -1024354495665039639}
   - {fileID: 1214819641227112489}
-  - {fileID: 1285072936502401978}
   - {fileID: 8564628368100467936}
   HierarchyData: 
 --- !u!114 &1214819641227112489
@@ -113,14 +113,15 @@ MonoBehaviour:
   m_Name: ExNode
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: -1024354495665039639}
+  parent: {fileID: -7396700270609634370}
   children: []
   _Hierarchy: {fileID: 11400000}
+  edgeText: 
   title: 
-  subTitle: 
+  subTitle: Subtitle
   icon: {fileID: 0}
-  disable: 1
-  alternate: 0
+  disable: 0
+  alternate: 1
 --- !u!114 &1285072936502401978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,14 +135,15 @@ MonoBehaviour:
   m_Name: ExNode Copy
   m_EditorClassIdentifier: 
   serializedVersion: 1
-  parent: {fileID: -5200578130566944477}
+  parent: {fileID: 0}
   children:
   - {fileID: 8564628368100467936}
   _Hierarchy: {fileID: 11400000}
+  edgeText: error
   title: 
-  subTitle: 
+  subTitle: Subtitle
   icon: {fileID: 0}
-  disable: 1
+  disable: 0
   alternate: 0
 --- !u!114 &8564628368100467936
 MonoBehaviour:
@@ -159,8 +161,9 @@ MonoBehaviour:
   parent: {fileID: 1285072936502401978}
   children: []
   _Hierarchy: {fileID: 11400000}
+  edgeText: <color=red><b>3 Errors
   title: 
-  subTitle: 
+  subTitle: SubtitleSubtitleasdfasdfasdf
   icon: {fileID: 0}
   disable: 0
-  alternate: 0
+  alternate: 1

@@ -194,8 +194,11 @@ namespace Less3.Hierarchy
         /// <summary>
         /// Delete the node, and all its children. Very destructive! Make sure to warn the user before calling this.
         /// </summary>
-        public static void DeleteNodeAction(this L3Hierarchy Hierarchy, L3HierarchyNode node)
+        public static void DeleteNodeAction(this L3Hierarchy Hierarchy, IHierarchyNodeElement nodeElement)
         {
+            if (Hierarchy == null || nodeElement is not L3HierarchyNode node || node == null)
+                return;
+
             RecordFullUndoIfAsset(Hierarchy, "Delete Node");
             DeleteNodeRecursive(Hierarchy, node);
             SetDirtyIfAsset(Hierarchy);
@@ -236,9 +239,12 @@ namespace Less3.Hierarchy
             Hierarchy.nodes.Remove(node);
         }
 
-        public static L3HierarchyNode DuplicateNodeAction(this L3Hierarchy Hierarchy, L3HierarchyNode node)
+        public static L3HierarchyNode DuplicateNodeAction(this L3Hierarchy Hierarchy, IHierarchyNodeElement nodeElement)
         {
-            if (Hierarchy == null || node == null)
+            if (Hierarchy == null)
+                return null;
+            
+            if (nodeElement is not L3HierarchyNode node || node == null)
                 return null;
 
             RecordFullUndoIfAsset(Hierarchy, L3HierarchyUndoManager.DUPLICATE_KEY);

@@ -2,6 +2,7 @@
 using Less3.Hierarchy;
 using Less3.TypeTree;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Less3.Hierarchy
 {
@@ -20,6 +21,17 @@ namespace Less3.Hierarchy
         public float NodeOpacity => disable ? 0.5f : 1f;
         public bool alternate;
         public bool UseAlternateBackground => alternate;
+
+        public string[] injectionTest = new string[] { "Test1", "Test2", "Test3" };
+
+        public override List<IHierarchyNodeElement> InjectChildren(List<IHierarchyNodeElement> children)
+        {
+            foreach (string childName in injectionTest)
+            {
+                children.Add(new InjectedHierarchyNode(childName, this, Hierarchy));
+            }
+            return children;
+        }
     }
 }
 #endif
