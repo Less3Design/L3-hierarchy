@@ -111,9 +111,6 @@ namespace Less3.Hierarchy.Editor
 
                 nodeElements[i] = new L3HierarchyNodeElement(element, item);
 
-                bool enable = item is L3HierarchyNode;
-                element.parent.parent.SetEnabled(enable);
-
                 //* add a right click context menu to the element
                 element.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
                 {
